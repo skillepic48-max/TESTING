@@ -1853,6 +1853,27 @@
   };
 
   /* =========================
+    ADOBE GROUP (shared notes)
+    ========================= */
+const adobeGroup = [
+  "Photoshop",
+  "LightRoom",
+  "Adobe Creative Cloud",
+  "Adobe Premiere Pro",
+  "Adobe Illustrator",
+  "Adobe After Effects",
+  "Adobe Acrobat Pro",
+  "Adobe InDesign",
+  "Adobe Audition",
+  "Adobe Animate",
+  "Adobe Dreamweaver",
+  "Adobe Fresco",
+  "Adobe Media Encoder",
+  "Adobe Character Animator",
+  "Adobe Firefly"
+];
+  
+  /* =========================
       STATE
       ========================= */
   let cart = [];
@@ -2629,6 +2650,15 @@ Acrobat Pro → edit & sign PDFs
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+      const isAdobeProduct = adobeGroup.includes(productName);
+  const forceNoteProductName =
+    isAdobeProduct && productName !== "LightRoom"
+      ? "LightRoom"
+      : productName;
+
+  const forceNoteSectionName =
+    isAdobeProduct ? "App&Web Private" : item.section;
+
     if (productName === 'Gemini Veo 3') {
         const standardNote = `Includes 2000GB Google storage• Unlimited devices\nဒါမဲ့ဝယ်ရင်စစချင်းသိထားရမာတေရှိပါတယ်။ Admin ပြောပြပါလိမ့်မယ်။`;
         if (item.section.includes('OwnMail')) return `ဒါကကိုယ့်ရဲ့GmailကိုပဲProလုပ်ပေးတာမလို့။အလုပ်လဲမရှုပ်ပါဘူး။ Password လဲပေးစရာမလိုပါဘူး။ Device ကလဲဝင်ထားသလောက်သုံးလို့ရနေမာပါ။`;
@@ -2637,13 +2667,13 @@ Acrobat Pro → edit & sign PDFs
         return standardNote;
     }
     if (productName === "TikTok Non Official" && item.section.toLowerCase().includes("livestream")) return null;
-    const fullText = moreDetailsByProduct[productName];
+    const fullText = moreDetailsByProduct[forceNoteProductName];
         if (productName === "INSHOT") return `Mod appမဟုတ်ပါဘူး။Android onlyပဲသူံးလို့ရပါတယ်။ Playstore ကappမာပဲသုံးလို့ရပါမယ်။\nWarranty 3လပေးပါတယ်။\nShare plan မို့လို့ 1 device ပဲသုံးလို့ရပါမယ်။`;
     if (!fullText) return null;
     const rawDetails = fullText.trim();
     const sectionHeaders = /^(Share|Private|SemiPrivate|FullPrivate|Tinder Plus Share|Login|Gift Plan & Link Plan|Gift Plan|Link Plan|Views \(NoDrop\)|Likes \(NoDrop\)|Comment - Emoji Type|Comment - Custom Type|Package Plan|Livestream Views|Livestream Likes|Livestream Share|Post Views|Positive Reactions|Negative Reactions|Custom Reactions|Premium Reactions|Members \(30Days Refill\)|Livestream Views|Comment - Impression Type|Comment - Custom Type|Video Views|Video Likes|Post Likes|Profile Followers|Page Followers|Live Stream Views|Video Views & Reels|Likes|Followers|Personal Plus \(Share\)|Personal Plus \(Private\)|Business - Invite Own Email|Business - Own|Private Own Mail|Private \(Own Mail\)|Base Service|1 Profile\(Semiprivate\)|5 Profiles\(Whole Account\)|Nitro Basic \(Key\)|Individual|Invite with email|Sharing Pro|Plan Basic|Plan Premium|HBO MAX \(ULTIMATE\) 1 Month|Private Whole Account \(1 Month\)|1 Profile|Whole Account|OwnMail Private|OwnMail Invite|Individual Plan|Business Own\(Full Warranty\)|Business Plus Own\(Full Warranty\)|Business Plus Own|Normal Plan|Family Head\(Can Invite 5 email\)|Invite Private|Web Private|App&Web Private|Pro Share|Pro Private|Lifetime Premium|Educational\(Invite\)|Individual Plan\(Private\)|Stars|Japan Region \(¥\)|US Region \(\$\)|UK Region \(£\)|Custom Amount|Turkey Region \(TL\)|Indonesia Region \(IDR\)|Brazil Region \(BRL\)|Korea Region \(₩\)|India Region \(₹\)|Australia Region \(A\$\)|Germany Region \(€\)|France Region \(€\)|Italy Region \(€\)|Switzerland Region \(CHF\)|Canada Region \(C\$\)|UAE Region \(AED\)|Poland Region \(PLN\)|Nitro \(Key\))/i;
     const lines = rawDetails.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-    let targetSection = item.section.replace(/ \(.*\)/, '');
+    let targetSection = forceNoteSectionName.replace(/ \(.*\)/, '');
     if (productName === 'HBO Max') targetSection = item.section;
     const sectionStartIndex = lines.findIndex(line => line.toLowerCase().includes(targetSection.toLowerCase()));
     if (productName === 'Telegram Premium' && (item.section === 'Gift Plan' || item.section === 'Link Plan')) targetSection = 'Gift Plan & Link Plan';
