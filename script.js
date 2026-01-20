@@ -164,6 +164,18 @@
     "Crunchyroll": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_A70E5F8_.png",
     "Telegram Star": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_AEF396E_.png",
     "Google Play Gift Card": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_E847DAF_.png?updatedAt=1767023159606",
+    "Adobe Premiere Pro": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_C6AC5BD_.png?updatedAt=1768837723586",
+    "Adobe Illustrator": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_C1803E2_.png?updatedAt=1768837723546",
+    "Adobe After Effects": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_EDDA3E8_.png?updatedAt=1768837723640",
+    "Adobe Acrobat Pro": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_2F8B05A_.png?updatedAt=1768837722226",
+    "Adobe InDesign": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_B177A1B_.png?updatedAt=1768837723406",
+    "Adobe Audition": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_C04DA03_.png?updatedAt=1768837723617",
+    "Adobe Animate": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_DE488C6_.png?updatedAt=1768837723581",
+    "Adobe Dreamweaver": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_A940617_.png?updatedAt=1768837723688",
+    "Adobe Fresco": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_551D86A_.png?updatedAt=1768837723327",
+    "Adobe Media Encoder": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_64C8CFC_.png?updatedAt=1768837723673",
+    "Adobe Character Animator": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_0A8896F_.png?updatedAt=1768837723721",
+    "Adobe Firefly": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_88B2A40_.png?updatedAt=1768837723447",
     // GOOGLE PLAY REGIONS
     "Google Play Turkey": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_C5A9149_.png",
     "Google Play Indonesia": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_9D4756B_.png",
@@ -184,13 +196,13 @@
     // STEAM IMAGES
     "Steam Gift Card": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_48A1713_.png?updatedAt=1767864363832",
     "Steam Argentina": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_67858F0_.png?updatedAt=1767864363692",
-    "Steam Hong Kong": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_FA03D13_.png?updatedAt=1767864363581", // Corrected
-    "Steam Thailand": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_CC0AB44_.png?updatedAt=1767864363831", // Corrected
-    "Steam Philippines": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_BA9D06B_.png?updatedAt=1767864363754", // Corrected
+    "Steam Hong Kong": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_FA03D13_.png?updatedAt=1767864363581",
+    "Steam Thailand": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_CC0AB44_.png?updatedAt=1767864363831",
+    "Steam Philippines": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_BA9D06B_.png?updatedAt=1767864363754",
     "Steam Malaysia": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_DB2E914_.png?updatedAt=1767864363745",
-    "Steam Singapore": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_EE0C5A0_.png?updatedAt=1767864363682", // Corrected
-    "Steam Taiwan": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_1095A5F_.png?updatedAt=1767864363591", // Corrected
-    "Steam Vietnam": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_ACECCF0_.png?updatedAt=1767864363623" // Corrected
+    "Steam Singapore": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_EE0C5A0_.png?updatedAt=1767864363682",
+    "Steam Taiwan": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_1095A5F_.png?updatedAt=1767864363591",
+    "Steam Vietnam": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_ACECCF0_.png?updatedAt=1767864363623"
   };
 
   const regionalProducts = {
@@ -243,9 +255,7 @@
       name: "Google Play Japan",
       img: imageFor["Google Play Japan"]
     }],
-    "Steam Gift Card": [
-      // ROW 1
-      {
+    "Steam Gift Card": [{
         name: "Steam United States",
         img: imageFor["Google Play US"]
       }, {
@@ -255,7 +265,6 @@
         name: "Steam Argentina",
         img: imageFor["Steam Argentina"]
       },
-      // ROW 2
       {
         name: "Steam Thailand",
         img: imageFor["Steam Thailand"]
@@ -266,7 +275,6 @@
         name: "Steam Brazil",
         img: imageFor["Google Play Brazil"]
       },
-      // ROW 3
       {
         name: "Steam Europe",
         img: imageFor["Google Play Germany"]
@@ -277,7 +285,6 @@
         name: "Steam Indonesia",
         img: imageFor["Google Play Indonesia"]
       },
-      // ROW 4
       {
         name: "Steam Singapore",
         img: imageFor["Steam Singapore"]
@@ -288,7 +295,6 @@
         name: "Steam Vietnam",
         img: imageFor["Steam Vietnam"]
       },
-      // ROW 5
       {
         name: "Steam United Kingdom",
         img: imageFor["Google Play UK"]
@@ -302,7 +308,6 @@
     ]
   };
 
-  // --- CONFIG FOR CUSTOM AMOUNT CALCULATOR ---
   const customConfigs = {
     "Google Play US": {
       min: 5,
@@ -1167,6 +1172,18 @@
         "price": "25,000 Kyats"
       }]
     },
+    "Adobe Premiere Pro": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Illustrator": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe After Effects": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Acrobat Pro": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe InDesign": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Audition": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Animate": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Dreamweaver": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Fresco": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Media Encoder": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Character Animator": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+    "Adobe Firefly": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
     "HMA VPN": {
       "Private": [{
         "duration": "1 Month",
@@ -1776,6 +1793,18 @@
     "Wattpad": ["android", "ios", "pc"],
     "Photoshop": ["pc"],
     "Adobe Creative Cloud": ["pc", "android", "ios"],
+    "Adobe Premiere Pro": ["pc"],
+    "Adobe Illustrator": ["pc", "ios"],
+    "Adobe After Effects": ["pc"],
+    "Adobe Acrobat Pro": ["pc", "android", "ios"],
+    "Adobe InDesign": ["pc"],
+    "Adobe Audition": ["pc"],
+    "Adobe Animate": ["pc"],
+    "Adobe Dreamweaver": ["pc"],
+    "Adobe Fresco": ["ios", "pc"],
+    "Adobe Media Encoder": ["pc"],
+    "Adobe Character Animator": ["pc"],
+    "Adobe Firefly": ["pc", "android", "ios"],
     "HMA VPN": ["pc", "android", "ios"],
     "Crunchyroll": ["android", "ios", "pc"],
     "Telegram Star": ["android", "ios", "pc"],
@@ -1862,7 +1891,8 @@
     const key = cartKey(item);
     const existing = cart.find(x => cartKey(x) === key);
     if (existing) existing.qty += 1;
-    else cart.push({ ...item,
+    else cart.push({
+      ...item,
       qty: 1
     });
     renderCart();
@@ -1958,12 +1988,12 @@
       return;
     }
 
-    let matchCount = 0;
     productCards.forEach(card => {
       const name = card.dataset.productName.toLowerCase();
-      if (name.includes(query)) {
+      // Rule Kron: Enhanced search to check category headers
+      const section = card.closest('.grid')?.previousElementSibling?.textContent?.toLowerCase() || '';
+      if (name.includes(query) || section.includes(query)) {
         card.classList.add('search-match');
-        matchCount++;
       } else {
         card.classList.remove('search-match');
       }
@@ -2124,9 +2154,11 @@
             title = 'Private Own 9 Devices';
             style = 'style="color: #ffeb3b;"';
           }
-        } else if (productName === 'Photoshop' || productName === 'LightRoom') {
-          if (sectionName === 'App&Web Private') {
+        } else if (productName === 'Photoshop' || productName === 'LightRoom' || productName.startsWith('Adobe ')) {
+          if (productName !== 'Adobe Creative Cloud' && sectionName === 'Private') {
             title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered by AdobeCreativeCloud</span>';
+          } else if (sectionName === 'App&Web Private') {
+             title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered by AdobeCreativeCloud</span>';
           }
         } else if (productName === 'HBO Max') {
           if (sectionName.includes('(ULTIMATE)')) {
