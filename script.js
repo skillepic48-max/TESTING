@@ -133,6 +133,8 @@
     "iCloud": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-30-EDAEA.png",
     "ChatGPT Plus": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-6-CB3-A91-1.png",
     "Gemini Veo 3": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-906-D5-F0.png",
+    "Flow AI": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_A4B3FC6_.png?updatedAt=1768837724112",
+    "NotebookLM": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_363313A_.png?updatedAt=1768837724010",
     "Grammarly AI": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-087-AC47.png",
     "Zoom": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-5270010.png",
     "YouTube": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-2-DCD6-D5.png",
@@ -140,6 +142,8 @@
     "Telegram Premium": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-A162-FC1.png",
     "Discord": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-D060367.png",
     "Perplexity Ai": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-F59-EE5-A.png",
+    "Flow AI": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_A4B3FC6_.png?updatedAt=1768837724112",
+    "NotebookLM": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_363313A_.png?updatedAt=1768837724010",
     "GAGAOOLALA": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-B18851-D.png",
     "BSTATION": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-631-CC84.png",
     "INSHOT": "https://ik.imagekit.io/dkdlgynlu/Picsart-25-10-16-13-54-58-884.png",
@@ -176,6 +180,11 @@
     "Adobe Media Encoder": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_64C8CFC_.png?updatedAt=1768837723673",
     "Adobe Character Animator": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_0A8896F_.png?updatedAt=1768837723721",
     "Adobe Firefly": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_88B2A40_.png?updatedAt=1768837723447",
+    "Adobe Bridge": "https://ik.imagekit.io/dkdlgynlu/ICON%20_A903907_.png?updatedAt=1768903201168",
+"Adobe Express": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_F486975_.png?updatedAt=1768837723481",
+"Adobe Capture": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_2256076_.png?updatedAt=1768837723698",
+"Adobe Aero": "https://ik.imagekit.io/dkdlgynlu/ICON%20_499A5C1_.png?updatedAt=1768903451221",
+"Adobe Fonts": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_7EAC5B9_.png?updatedAt=1768837723659",
     // GOOGLE PLAY REGIONS
     "Google Play Turkey": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_C5A9149_.png",
     "Google Play Indonesia": "https://ik.imagekit.io/dkdlgynlu/New%20Project%207%20_9D4756B_.png",
@@ -680,7 +689,20 @@
         "duration": "1 Year",
         "price": "15,000 Kyats"
       }]
-    },
+    },"Flow AI": {
+  "OwnMail Invite": [{
+    "duration": "1 Year",
+    "price": "15,000 Kyats"
+  }]
+},
+
+"NotebookLM": {
+  "OwnMail Invite": [{
+    "duration": "1 Year",
+    "price": "15,000 Kyats"
+  }]
+},
+
     "Grammarly AI": {
       "Share": [{
         "duration": "1 Month",
@@ -1184,6 +1206,22 @@
     "Adobe Media Encoder": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
     "Adobe Character Animator": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
     "Adobe Firefly": { "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }] },
+   "Adobe Bridge": {
+  "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }]
+},
+"Adobe Express": {
+  "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }]
+},
+"Adobe Capture": {
+  "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }]
+},
+"Adobe Aero": {
+  "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }]
+},
+"Adobe Fonts": {
+  "Private": [{ "duration": "4 Months", "price": "20,000 Kyats" }]
+},
+
     "HMA VPN": {
       "Private": [{
         "duration": "1 Month",
@@ -1768,6 +1806,8 @@
     "ChatGPT Plus": ["android", "ios", "pc"],
     "Gemini Veo 3": ["android", "ios", "pc"],
     "Grammarly AI": ["pc", "android", "ios"],
+    "Flow AI": ["android", "ios", "pc"],
+    "NotebookLM": ["android", "ios", "pc"],
     "Zoom": ["pc", "android", "ios"],
     "YouTube": ["pc", "android", "ios", "tv"],
     "Tinder": ["android", "ios"],
@@ -1805,6 +1845,11 @@
     "Adobe Media Encoder": ["pc"],
     "Adobe Character Animator": ["pc"],
     "Adobe Firefly": ["pc", "android", "ios"],
+    "Adobe Bridge": ["pc"],
+"Adobe Express": ["android", "ios", "pc"],
+"Adobe Capture": ["android", "ios"],
+"Adobe Aero": ["ios", "pc"],
+"Adobe Fonts": ["pc", "android", "ios"],
     "HMA VPN": ["pc", "android", "ios"],
     "Crunchyroll": ["android", "ios", "pc"],
     "Telegram Star": ["android", "ios", "pc"],
@@ -2181,6 +2226,11 @@ const adobeGroup = [
           } else if (sectionName === 'App&Web Private') {
              title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered by AdobeCreativeCloud</span>';
           }
+        } else if (productName === 'Flow AI' || productName === 'NotebookLM') {
+         if (sectionName === 'Invite OwnMail' || sectionName === 'OwnMail Invite') {
+            title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered By GoogleOneGemini</span>';
+          }
+
         } else if (productName === 'HBO Max') {
           if (sectionName.includes('(ULTIMATE)')) {
             title = 'HBO MAX (ULTIMATE) 1 Month';
@@ -2485,6 +2535,19 @@ Includes 2000GB Google storage• Unlimited devices
 
 OwnMail Invite
 ဒါကကိုယ့်ရဲ့GmailကိုပဲProလုပ်ပေးတာမလို့။အလုပ်လဲမရှုပ်ပါဘူး။ Password လဲပေးစရာမလိုပါဘူး။ Device ကလဲဝင်ထားသလောက်သုံးလို့ရနေမာပါ။` + generalDetailsBlock,
+    "Flow AI": `OwnMail Invite
+
+ဒီဟာကGoogle One Pro,Gemini Proဝယ်ရင်ပါတဲ့ဟာပါ။
+ဒီဟာဝယ်ရင်
+Google One Storage2TB 1Year
+Gemini Veo 3 Pro 2TB 1Yearပါရမာပါ။` + generalDetailsBlock,
+
+"NotebookLM": `OwnMail Invite
+
+ဒီဟာကGoogle One Pro,Gemini Proဝယ်ရင်ပါတဲ့ဟာပါ။
+ဒီဟာဝယ်ရင်
+Google One Storage2TB 1Year
+Gemini Veo 3 Pro 2TB 1Yearပါရမာပါ။` + generalDetailsBlock,
     "Grammarly AI": `Share\nFull warranty • One device only` + generalDetailsBlock,
     "Zoom": `Full warranty.\nAll pro features unlock.\nCan use 2-5 devices.` + generalDetailsBlock,
     "YouTube": `Private (Individual Plan)
