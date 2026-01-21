@@ -2229,7 +2229,7 @@ const adobeGroup = [
              title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered by AdobeCreativeCloud</span>';
           }
         } else if (productName === 'Flow AI' || productName === 'NotebookLM') {
-         if (sectionName === 'Invite OwnMail' || sectionName === 'OwnMail Invite') {
+         if (sectionName === 'Invite OwnMail' || sectionName === 'OwnMail Invite' || sectionName === 'Private') {
             title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered By GoogleOneGemini</span>';
           }
 
@@ -2715,6 +2715,11 @@ Acrobat Pro → edit & sign PDFs
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+      // --- Flow AI / NotebookLM Checkout Notes ---
+   if ((productName === 'Flow AI' || productName === 'NotebookLM') && item.section === 'Private') {
+    return `Includes 2000GB Google storage• Unlimited devices
+    ဒါမဲ့ဝယ်ရင်စစချင်းသိထားရမာတေရှိပါတယ်။ Admin ပြောပြပါလိမ့်မယ်။`;
+   }
       const isAdobeProduct = adobeGroup.includes(productName);
   const forceNoteProductName =
     isAdobeProduct && productName !== "LightRoom"
