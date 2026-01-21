@@ -693,10 +693,12 @@
   "OwnMail Invite": [{
     "duration": "1 Year",
     "price": "15,000 Kyats"
-  }]
-},
-
-"NotebookLM": {
+  }],
+      "Private": [{
+        "duration": "1 Year",
+       "price": "30,000 Kyats"
+      }]
+},"NotebookLM": {
   "OwnMail Invite": [{
     "duration": "1 Year",
     "price": "15,000 Kyats"
