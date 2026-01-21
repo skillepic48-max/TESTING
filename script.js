@@ -2345,14 +2345,13 @@ const adobeGroup = [
         <div class="hero-title">${escapeHTML(productName)}</div>
         <div class="hero-subtitle" style="opacity:0.8; margin-bottom:10px;">Select Region</div>
       </div>
-        
-      <div class="grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
+      <div class="grid region-grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
         ${regions.map(region => `
-            <div class="card tap" data-product-name="${escapeHTML(region.name)}">
-                <img src="${region.img}" alt="${escapeHTML(region.name)}">
-            </div>
-        `).join('')}
-      </div>
+           <div class="card tap region-card" data-product-name="${escapeHTML(region.name)}">
+               <img src="${region.img}" alt="${escapeHTML(region.name)}">
+          </div>
+       `).join('')}
+     </div>
       `;
 
     dom.views.product.innerHTML = pageHTML;
