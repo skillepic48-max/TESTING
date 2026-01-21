@@ -2536,18 +2536,18 @@ Includes 2000GB Google storage• Unlimited devices
 OwnMail Invite
 ဒါကကိုယ့်ရဲ့GmailကိုပဲProလုပ်ပေးတာမလို့။အလုပ်လဲမရှုပ်ပါဘူး။ Password လဲပေးစရာမလိုပါဘူး။ Device ကလဲဝင်ထားသလောက်သုံးလို့ရနေမာပါ။` + generalDetailsBlock,
     "Flow AI": `OwnMail Invite
-
 ဒီဟာကGoogle One Pro,Gemini Proဝယ်ရင်ပါတဲ့ဟာပါ။
+Invite Planမို့လို့Ai Credit တစ်လ 1000ကိုတော့ Share Useရမာပါ။
+ဆိုလိုတာကတခြားFamily Membersတေသုံးရင်လဲCreditsတေကလျှော့နိုင်ပါတယ်။
 ဒီဟာဝယ်ရင်
-Google One Storage2TB 1Year
-Gemini Veo 3 Pro 2TB 1Yearပါရမာပါ။` + generalDetailsBlock,
+Google One Storage2TB 1Year(Share)
+Gemini Veo 3 Pro 1Yearပါရမာပါ။` + generalDetailsBlock,
 
 "NotebookLM": `OwnMail Invite
-
 ဒီဟာကGoogle One Pro,Gemini Proဝယ်ရင်ပါတဲ့ဟာပါ။
 ဒီဟာဝယ်ရင်
-Google One Storage2TB 1Year
-Gemini Veo 3 Pro 2TB 1Yearပါရမာပါ။` + generalDetailsBlock,
+Google One Storage2TB 1Year(Share)
+Gemini Veo 3 Pro 1Yearပါရမာပါ။` + generalDetailsBlock,
     "Grammarly AI": `Share\nFull warranty • One device only` + generalDetailsBlock,
     "Zoom": `Full warranty.\nAll pro features unlock.\nCan use 2-5 devices.` + generalDetailsBlock,
     "YouTube": `Private (Individual Plan)
