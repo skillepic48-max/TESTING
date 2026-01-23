@@ -2744,12 +2744,12 @@ Can't use on iOS devices.` + generalDetailsBlock,
    }
 
      // Own Mail 1 Week
-   if (item.section === "Private Own Mail" && item.duration.includes("1 Week")) {
+   if (item.section === "Private Own Mail" && item.duration.includes("7 Days")) {
     return `<div class="burmese-font">OwnMail နဲ့လုပ်ဖို့ဆို CapCut တခါမမဖွင့်ဖူးတဲ့ Email လိုပါမယ်။ အဲ့တာနဲ့မရမာပါ။
-    CapCut က အကောင့်ပြောင်းလဲ Project တေမပျက်တာမလို့ Private ကပိုရွေးချယ်သင့်ပါတယ်။  
+    CapCut က အကောင့်ပြောင်းလဲ Project တေမပျက်တာမလို့ Private ကပိုရွေးချယ်သင့်ပါတယ်။   
     2 to 3 devices. Full warranty for the entire plan duration.
     </div>`;
-    }
+   }
       
    }
    // ================= END CAPCUT NOTES ================= 
