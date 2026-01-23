@@ -503,17 +503,18 @@
       }]
     },
     "Express Vpn": {
+      "Private": [{
+        "duration": "1 Month",
+        "price": "7,900 Kyats"
+      }],
       "Share": [{
         "duration": "1 Month",
         "price": "1,000 Kyats"
       }, {
-        "duration": "PC / Laptop (1 Month)",
+        "duration": "WindowsPC / Laptop(1 Month)",
         "price": "2,000 Kyats"
-      }],
-      "Private": [{
-        "duration": "1 Month",
-        "price": "7,900 Kyats"
       }]
+     
     },
     "NordVpn": {
       "Share": [{
