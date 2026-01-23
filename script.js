@@ -513,6 +513,12 @@
       }, {
         "duration": "WindowsPC / Laptop(1 Month)",
         "price": "2,000 Kyats"
+      }, {
+        "duration": "MacBook(1 Month)",
+        "price": "2,000 Kyats"
+      }, {
+        "duration": "Linux(1 Month)",
+        "price": "2,000 Kyats"
       }]
      
     },
@@ -2717,6 +2723,17 @@ Can't use on iOS devices.` + generalDetailsBlock,
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+      // Express VPN Windows plan note (Share → WindowsPC/Laptop)
+   if (productName === "Express Vpn" && /windowspc/i.test(item.duration)) {
+    return "Windows deviceတေမာပဲသုံးလို့ရပါမယ်။Full warrenty.";
+   }
+   if (/macbook/i.test(item.duration)) {
+    return "MacBookမာပဲသုံးလို့ရပါမယ်။Full Warranty.";
+   }
+   if (/linux/i.test(item.duration)) {
+    return "Linux deviceတေမာပဲသုံးလို့ရပါမယ်။Full Warranty.";
+   }
+
       // --- Flow AI / NotebookLM Checkout Notes ---
    if ((productName === 'Flow AI' || productName === 'NotebookLM') && item.section === 'Private') {
     return `Includes 2000GB Google storage• Unlimited devices
