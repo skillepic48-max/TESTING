@@ -2723,6 +2723,36 @@ Can't use on iOS devices.` + generalDetailsBlock,
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+    // ================= CAPCUT CHECKOUT NOTES =================
+    if (productName === "CapCut") {
+      // Private 1 Month
+   if (item.section === "Private" && item.duration.includes("1 Month")) {
+    return `<div class="burmese-font">30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေးမယ်။
+    30ရက်တစ်လအတိလဲပါနိုင်တယ်၊အများဆုံး 35 ရက်ထိပါနိုင်တာကိုပြောချင်တာပါ။  
+    2 to 3 devices. Full warranty for the entire plan duration.
+    </div>`;
+   }
+     
+     // Own Mail 1 Month
+   if (item.section === "Private Own Mail" && item.duration.includes("1 Month")) {
+    return `<div class="burmese-font">OwnMail နဲ့လုပ်ဖို့ဆို CapCut တခါမမဖွင့်ဖူးတဲ့ Email လိုပါမယ်။ အဲ့တာနဲ့မရမာပါ။
+    CapCut က အကောင့်ပြောင်းလဲ Project တေမပျက်တာမလို့ Private ကပိုရွေးချယ်သင့်ပါတယ်။  
+    30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေးမယ်။30ရက်တစ်လအတိလဲပါနိုင်တယ်
+    အများဆုံး 35 ရက်ထိပါနိုင်တာကိုပြောချင်တာပါ။  
+    2 to 3 devices. Full warranty for the entire plan duration.
+    </div>`;
+   }
+
+     // Own Mail 1 Week
+   if (item.section === "Private Own Mail" && item.duration.includes("1 Week")) {
+    return `<div class="burmese-font">OwnMail နဲ့လုပ်ဖို့ဆို CapCut တခါမမဖွင့်ဖူးတဲ့ Email လိုပါမယ်။ အဲ့တာနဲ့မရမာပါ။
+    CapCut က အကောင့်ပြောင်းလဲ Project တေမပျက်တာမလို့ Private ကပိုရွေးချယ်သင့်ပါတယ်။  
+    2 to 3 devices. Full warranty for the entire plan duration.
+    </div>`;
+    }
+      
+   }
+   // ================= END CAPCUT NOTES ================= 
       // Express VPN Windows plan note (Share → WindowsPC/Laptop)
    if (productName === "Express Vpn" && /windowspc/i.test(item.duration)) {
     return "Windows deviceတေမာပဲသုံးလို့ရပါမယ်။Full warrenty.";
