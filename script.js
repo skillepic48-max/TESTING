@@ -137,7 +137,7 @@
     "NotebookLM": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_363313A_.png?updatedAt=1768837724010",
     "Grammarly AI": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-087-AC47.png",
     "Zoom": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-5270010.png",
-    "YouTube": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-2-DCD6-D5.png",
+    "YouTube Premium": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-2-DCD6-D5.png",
     "Tinder": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-DCDE0-B9.png",
     "Telegram Premium": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-A162-FC1.png",
     "Discord": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-D060367.png",
@@ -576,7 +576,7 @@
       }],
       "Whole Account": [{
         "duration": "5 Profiles (1 Month)",
-        "price": "45,000 Kyats"
+        "price": "5,5000 Kyats"
       }]
     },
     "Disney+": {
@@ -668,7 +668,7 @@
         "duration": "1 Month",
         "price": "15,000 Kyats"
       }],
-      "Business - Invite Own Email": [{
+      "Business Plus - Invite Own Email": [{
         "duration": "1 Month",
         "price": "12,000 Kyats"
       }],
@@ -694,12 +694,12 @@
       }],
       "OwnMail Invite": [{
         "duration": "1 Year",
-        "price": "15,000 Kyats"
+        "price": "17,900 Kyats"
       }]
     },"Flow AI": {
   "OwnMail Invite": [{
     "duration": "1 Year",
-    "price": "15,000 Kyats"
+    "price": "17,900 Kyats"
   }],
       "Private": [{
         "duration": "1 Year",
@@ -708,7 +708,7 @@
 },"NotebookLM": {
   "OwnMail Invite": [{
     "duration": "1 Year",
-    "price": "15,000 Kyats"
+    "price": "17,900 Kyats"
   }]
 },
 
@@ -728,14 +728,18 @@
         "price": "8,599 Kyats"
       }]
     },
-    "YouTube": {
+    "YouTube Premium": {
       "Private": [{
         "duration": "1 Month",
         "price": "6,000 Kyats"
       }, {
         "duration": "3 Months",
         "price": "16,500 Kyats"
-      }]
+      }],
+      "OwnMail Invite(Family Plan)": [{
+         "duration": "1 Month",
+         "price": "5,000 Kyats"
+      }] 
     },
     "Tinder": {
       "Tinder Plus Share": [{
@@ -857,6 +861,10 @@
       "Login method": [{
         "duration": "100 Coin",
         "price": "5,300 Kyats"
+      }],
+    "NoLoginBoost": [{
+      "duration": "100 Coin",
+      "price": "5,300 Kyats"
       }]
     },
     "TikTok Non Official": {
@@ -1818,7 +1826,7 @@
     "Flow AI": ["android", "ios", "pc"],
     "NotebookLM": ["android", "ios", "pc"],
     "Zoom": ["pc", "android", "ios"],
-    "YouTube": ["pc", "android", "ios", "tv"],
+    "YouTube Premium": ["pc", "android", "ios", "tv"],
     "Tinder": ["android", "ios"],
     "Telegram Premium": ["android", "ios", "pc"],
     "Discord": ["android", "ios", "pc"],
@@ -1952,6 +1960,59 @@ const adobeGroup = [
   };
 
   const formatKyats = n => (n || 0).toLocaleString("en-US") + " Kyats";
+  // ===============================
+  // TOTAL UNITS HELPER (100 Coin x5 → 500 Coins)
+  // ===============================
+  function computeTotalUnits(duration, qty) {
+  if (!duration || !qty || qty <= 1) return null;
+
+  // grab first "<number> <word>" found (e.g. "100 Coin", "10,000 Views", "3 Months")
+  const m = String(duration)
+    .replace(/,/g, "")
+    .match(/\b(\d+(?:\.\d+)?)\s*([A-Za-z]+)\b/);
+
+  if (!m) return null;
+
+  const baseNum = Number(m[1]);
+  let unit = m[2];
+
+  // only allow units we actually want to show totals for
+  const allowedUnits = new Set([
+    "Coin","Coins",
+    "Star","Stars",
+    "View","Views",
+    "Like","Likes",
+    "Follower","Followers",
+    "Member","Members",
+    "Month","Months",
+    "Year","Years",
+    "Day","Days",
+    "Week","Weeks"
+  ]);
+
+  if (!allowedUnits.has(unit)) return null;
+
+  const total = baseNum * qty;
+
+  // normalize plural (Coin -> Coins, Month -> Months, etc.)
+  const pluralMap = {
+    Coin:"Coins",
+    Star:"Stars",
+    View:"Views",
+    Like:"Likes",
+    Follower:"Followers",
+    Member:"Members",
+    Month:"Months",
+    Year:"Years",
+    Day:"Days",
+    Week:"Weeks"
+  };
+
+  if (total !== 1 && pluralMap[unit]) unit = pluralMap[unit];
+
+  return `Total • ${total.toLocaleString("en-US")} ${unit}`;
+}
+
   const cartKey = ({
     product,
     section,
@@ -2249,6 +2310,14 @@ const adobeGroup = [
          if (sectionName === 'Invite OwnMail' || sectionName === 'OwnMail Invite' || sectionName === 'Private') {
             title += ' <span style="background:#ffeb3b; color:#000; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 5px #ffeb3b;">Powered By GoogleOneGemini</span>';
           }
+        } else if (productName === 'AlightMotion') {
+         if (sectionName === 'Private (Own Mail)') {
+            title += ' <span style="background:#00ff9c; color:#002b1f; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 10px #00ff9c;">Recommended</span>';
+          }
+        } else if (productName === 'NordVpn' || productName === 'Surfshark Vpn') {
+         if (sectionName === 'Share' || sectionName === 'Private' || sectionName === 'Share' || sectionName === 'Private') {
+            title += ' <span style="background:#1e90ff; color:#ffffff; padding:2px 6px; border-radius:4px; font-size:11px; margin-left:8px; font-weight:900; box-shadow:0 0 6px #1e90ff;">Myanmarမာသုံးမရပါ</span>';
+          }
 
         } else if (productName === 'HBO Max') {
           if (sectionName.includes('(ULTIMATE)')) {
@@ -2354,6 +2423,187 @@ const adobeGroup = [
         setTimeout(() => addBtn.textContent = "Add to Cart", 1000);
       });
     }
+    // --- NETFLIX: CUSTOM MONTHS (like Google Play custom amount) ---
+if (productName === "Netflix") {
+  // Base monthly price for "1 Profile" (Semiprivate) from your data
+  const netflixMonthly = parseKyats(productData["Netflix"]?.["1 Profile"]?.[0]?.price) || 15000;
+
+  const netflixMonthsHTML = `
+    <div class="plan-box">
+      <div class="plan-title">More Months (1 Profile)</div>
+      <div style="padding:10px; display:flex; flex-direction:column; gap:10px;">
+        <label style="font-size:14px; color:#ccc;">Enter Months (1 - 12)</label>
+
+        <div style="display:flex; gap:10px;">
+          <input
+            type="number"
+            id="netflix-months-input"
+            min="1"
+            max="12"
+            placeholder="1-12"
+            style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:white; font-size:16px;"
+          />
+          <div id="netflix-calc-price" style="align-self:center; font-weight:bold; color:#00e676; min-width:120px; text-align:right;">
+            0 Kyats
+          </div>
+        </div>
+
+        <button id="btn-add-netflix-months" class="btn btn-primary" style="width:100%;">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+
+  const popularSection = dom.views.product.querySelector(".popular-section");
+  if (popularSection) {
+    popularSection.insertAdjacentHTML("beforebegin", netflixMonthsHTML);
+
+    const input = document.getElementById("netflix-months-input");
+    const priceDisplay = document.getElementById("netflix-calc-price");
+    const addBtn = document.getElementById("btn-add-netflix-months");
+
+    input.addEventListener("input", () => {
+      const months = parseInt(input.value, 10);
+      if (!months || months < 1 || months > 12) {
+        addBtn.style.backgroundColor = "#ff4444";
+        addBtn.textContent = "⚠️ Limit: 1 - 12";
+        priceDisplay.textContent = "0 Kyats";
+      } else {
+        addBtn.style.removeProperty("background-color");
+        addBtn.textContent = "Add to Cart";
+        const totalPrice = netflixMonthly * months;
+        priceDisplay.textContent = formatKyats(totalPrice);
+      }
+    });
+
+    addBtn.addEventListener("click", () => {
+      const months = parseInt(input.value, 10);
+      if (!months || months < 1 || months > 12) return;
+
+      const totalPrice = netflixMonthly * months;
+
+      const item = {
+        product: "Netflix",
+        section: "1 Profile",
+        duration: `${months} Month${months > 1 ? "s" : ""}`,
+        unitPrice: totalPrice,
+        priceText: formatKyats(totalPrice)
+      };
+
+      addToCart(item);
+
+      // ✅ RESET after adding (like Google Play custom amount)
+      input.value = "";
+      priceDisplay.textContent = "0 Kyats";
+      addBtn.style.removeProperty("background-color");
+
+      addBtn.textContent = "Added!";
+      setTimeout(() => (addBtn.textContent = "Add to Cart"), 1000);
+    });
+  }
+}
+    // --- TIKTOK OFFICIAL: CUSTOM COINS (like Google Play custom amount) ---
+if (productName === "TikTok Official") {
+  // Use your existing price as base: 100 Coin = 5,300 Kyats
+  const basePriceText = productData["TikTok Official"]?.["Login method"]?.[0]?.price;
+  const baseCoinsText = productData["TikTok Official"]?.["Login method"]?.[0]?.duration;
+
+  const basePrice = parseKyats(basePriceText) || 5300; // fallback
+  const baseCoinsMatch = String(baseCoinsText || "").match(/(\d+)/);
+  const baseCoins = baseCoinsMatch ? parseInt(baseCoinsMatch[1], 10) : 100; // fallback
+
+  // Kyats per coin (example: 5300/100 = 53)
+  const kyatsPerCoin = Math.max(1, Math.round(basePrice / baseCoins));
+
+  // You can change these limits if you want
+  const MIN_COINS = 100;
+  const MAX_COINS = 100000;
+
+  const tiktokCoinsHTML = `
+    <div class="plan-box">
+      <div class="plan-title">Custom Coins (TikTok Official)</div>
+      <div style="padding:10px; display:flex; flex-direction:column; gap:10px;">
+        <label style="font-size:14px; color:#ccc;">Enter Coins (${MIN_COINS} - ${MAX_COINS})</label>
+
+        <div style="display:flex; gap:10px;">
+          <input
+            type="number"
+            id="tiktok-coins-input"
+            min="${MIN_COINS}"
+            max="${MAX_COINS}"
+            placeholder="${MIN_COINS}-${MAX_COINS}"
+            style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:white; font-size:16px;"
+          />
+          <div id="tiktok-calc-price" style="align-self:center; font-weight:bold; color:#00e676; min-width:120px; text-align:right;">
+            0 Kyats
+          </div>
+        </div>
+
+        <div style="font-size:12px; opacity:.75; line-height:1.4;">
+          Rate: ~${kyatsPerCoin} Kyats / Coin (based on ${baseCoins} Coin = ${basePrice.toLocaleString("en-US")} Kyats)
+        </div>
+
+        <button id="btn-add-tiktok-coins" class="btn btn-primary" style="width:100%;">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+
+  const popularSection = dom.views.product.querySelector(".popular-section");
+  if (popularSection) {
+    popularSection.insertAdjacentHTML("beforebegin", tiktokCoinsHTML);
+
+    const input = document.getElementById("tiktok-coins-input");
+    const priceDisplay = document.getElementById("tiktok-calc-price");
+    const addBtn = document.getElementById("btn-add-tiktok-coins");
+
+    input.addEventListener("input", () => {
+      const coins = parseInt(input.value, 10);
+
+      if (!coins || coins < MIN_COINS || coins > MAX_COINS) {
+        addBtn.style.backgroundColor = "#ff4444";
+        addBtn.textContent = `⚠️ Limit: ${MIN_COINS} - ${MAX_COINS}`;
+        priceDisplay.textContent = "0 Kyats";
+        return;
+      }
+
+      addBtn.style.removeProperty("background-color");
+      addBtn.textContent = "Add to Cart";
+
+      const totalPrice = coins * kyatsPerCoin;
+      priceDisplay.textContent = formatKyats(totalPrice);
+    });
+
+    addBtn.addEventListener("click", () => {
+      const coins = parseInt(input.value, 10);
+      if (!coins || coins < MIN_COINS || coins > MAX_COINS) return;
+
+      const totalPrice = coins * kyatsPerCoin;
+
+      const item = {
+        product: "TikTok Official",
+        section: "Login method",
+        duration: `${coins} Coin`,
+        unitPrice: totalPrice,
+        priceText: formatKyats(totalPrice)
+      };
+
+      addToCart(item);
+
+      // ✅ RESET after add
+      input.value = "";
+      priceDisplay.textContent = "0 Kyats";
+      addBtn.style.removeProperty("background-color");
+
+      addBtn.textContent = "Added!";
+      setTimeout(() => (addBtn.textContent = "Add to Cart"), 1000);
+    });
+  }
+}
+
+
 
     renderPopular("popular-product", productName);
     showView('product');
@@ -2418,21 +2668,25 @@ Private
 Private Own Mail
 2 to 3 devices. Full warranty for the entire plan duration.` + generalDetailsBlock,
     "AlightMotion": `Share
-Full warranty for full duration
+Full warranty for 6Months
 Covers premium subscription errors
 We'll renew a new one if any error occurs
 
 Private
 Full warranty for full duration
 8 devices max
-Covers premium subscription errors
-We'll renew a new one if any error occurs
+Private က Tempmailနဲ့လုပ်ထားတာပါ။
+Full Warranty က 1Yearအတွင်းတခုခုဖြစ်ရင်တခါပြန်လဲပေးပါတယ်။
+Riskကင်းတဲ့ OwnMail ယူလဲရပါတယ်။
 
 Private (Own Mail)
 Full warranty for full duration
 8 devices max
-Covers premium subscription errors
-We'll renew a new one if any error occurs` + generalDetailsBlock,
+Gmail/Email and password ပေးရပါတယ်။
+အကောင့်ရဲ့ Password ပါ။
+Alight Motionမာထားမဲ့ Password မဟုတ်ပါဘူး။
+Google အကောင့်ကိုဝင်ပီးလုပ်ပေးမာပါ။
+ပီးရင်ပြန်ထွက်မာပါ။` + generalDetailsBlock,
     "Wink": `Share
 One device only
 Full warranty for full duration
@@ -2495,8 +2749,8 @@ Only 1 device per invite
 Family Head(Can Invite 5 email)
 ကျနော်ပေးမဲ့ Head အကောင့်အပါအဝင်တခြား email 5ခုလုံးက(Word, Excel, etc.) and 1TB of OneDrive storageစတဲ့ Microsoft Copilot Proမာပါတဲ့ features တေအကုန်သုံးလို့ရသွားမာပါ။` + generalDetailsBlock,
     "Netflix": `1 Profile
-Own 1 profile you can use 2 devices
-Netflix အကောင့်တေကိုwarrantyအပြည့်ပေးထားပါတယ်ဒါပေမဲ့ setting တေကလိပီးဖြစ်လာတဲ့ error တေအတွက်fixing time 1 to 2Days လောက်ထိကြာနိုင်ပါတယ်။ကိုယ်ကဘာမမလုပ်ရင်တောင်တခြားpfကလူတေလုပ်လို့ဖြစ်ရင်လဲfixing time စောင့်ရမာပါ။
+Own 1 profile you can use 2 devices.Tv Support.
+Full Warrenty.
 
 Whole Account
 Own 5 profiles you can use 10 devices` + generalDetailsBlock,
@@ -2535,7 +2789,7 @@ Full warranty for plan duration.` + generalDetailsBlock,
 Up to 5 devices (not recommended)
 ${chatGptWarrantyNote}
 
-Business - Invite Own Email
+Business Plus - Invite Own Email
 1 device
 ဒါကကိုယ်သုံးနေတဲ့ Emailကို GPT Plus ပြောင်းပေးတာဖြစ်ပီး history ကလဲကိုယ့်အကောင့်ပဲမို့ private history နဲ့သုံးရမာပါ။
 ${chatGptWarrantyNote}
@@ -2569,10 +2823,17 @@ Google One Storage2TB 1Year(Share)
 Gemini Veo 3 Pro 1Yearပါရမာပါ။` + generalDetailsBlock,
     "Grammarly AI": `Share\nFull warranty • One device only` + generalDetailsBlock,
     "Zoom": `Full warranty.\nAll pro features unlock.\nCan use 2-5 devices.` + generalDetailsBlock,
-    "YouTube": `Private (Individual Plan)
+    "YouTube Premium": `Private (Individual Plan)
 Full warranty.
 No ads with all YouTube premium features.
-Including YouTube music.` + generalDetailsBlock,
+Including YouTube music.
+
+OwnMail Invite(Family Plan)
+YouTube Account ပေးရမာပါ။
+ဝင်ပီး Region Changeပေးမာပါ။Gmail&Passwordလိုပါတယ်။
+လုပ်ပီးရင်ပြန်ထွက်မာပါ။လတိုင်းသက်တန်းတိုးလို့ရပါတယ်။
+Warranty ကတခုခုဖြစ်ခဲ့ရင်တခါပြန်လဲပေးပါတယ်။` + generalDetailsBlock,
+
     "Tinder": `Code redeem use.\n1× warranty. Can only use one devices` + generalDetailsBlock,
     "Telegram Premium": `Login
 • 1 Month — 21,000 Kyats
@@ -2619,7 +2880,13 @@ Supports all devices.` + generalDetailsBlock,
     "PlaySafeCard": `Voucher Code
 Expires in 7 Days.
 Please contact admin for usage details.` + generalDetailsBlock,
-    "TikTok Official": `Coinက TikTok official boostတဲ့နေရာမာ Coin တေကိုသုံးရတာပါ။အဲ့ Coin ကိုရောင်းပေးတာပါ။ Login ဝင်ပီးဝယ်ရတာပါ။ buttt email password ဘာမပေးစရာမလိုပါဘူး။` + generalDetailsBlock,
+    "TikTok Official": `Login method
+     Coinက TikTok official boostတဲ့နေရာမာ Coin တေကိုသုံးရတာပါ။ Login ဝင်ပီးဝယ်ရတာပါ။ buttt email password ဘာမပေးစရာမလိုပါဘူး။
+
+     NoLoginBoost
+     ဒါကအကောင့်ဝင်မရတာတေ။မဝင်စေချင်တာတေအတွက်Video Linkပေးရုံနဲ့ Boost ပေးတာပါ။`
+     + generalDetailsBlock,
+
     "TikTok Non Official": `Views (NoDrop)
     No dropဆိုပေမဲ့ TikTok ကစာပို့ပီးဖျက်ချသွားရင်တာ့ပြန်မထည့်ပေးပါဘူး။ထည့်ရင်လဲအကောင့် warning ထိမာပါ။
         
@@ -2733,11 +3000,40 @@ Can't use on iOS devices.` + generalDetailsBlock,
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+    // --- TikTok Official: NoLoginBoost checkout note ---
+    if (productName === "TikTok Official" && item.section === "NoLoginBoost") {
+    return `<div class="burmese-font">ဒါကအကောင့်ဝင်မရတာတေ။မဝင်စေချင်တာတေအတွက်Video Linkပေးရုံနဲ့ Boost ပေးတာပါ။</div>`;
+    }
+
+    if (productName === "AlightMotion") {
+    if (item.section === "Share") {
+    return `Full warranty for 6Months
+    Covers premium subscription errors
+    We'll renew a new one if any error occurs`;
+    }
+    if (item.section === "Private") {
+    return `Full warranty for full duration
+    8 devices max
+    Private က Tempmailနဲ့လုပ်ထားတာပါ။
+    Full Warranty က 1Yearအတွင်းတခုခုဖြစ်ရင်တခါပြန်လဲပေးပါတယ်။
+    Riskကင်းတဲ့ OwnMail ယူလဲရပါတယ်။`;
+    }
+    if (item.section === "Private (Own Mail)" || item.section === "Private (Own Mail)") {
+    return `Full warranty for full duration
+    8 devices max
+    Gmail/Email and password ပေးရပါတယ်။
+    အကောင့်ရဲ့ Password ပါ။
+    Alight Motionမာထားမဲ့ Password မဟုတ်ပါဘူး။
+    Google အကောင့်ကိုဝင်ပီးလုပ်ပေးမာပါ။
+    ပီးရင်ပြန်ထွက်မာပါ။`;
+    }
+    }
+
     // ================= CAPCUT CHECKOUT NOTES =================
     if (productName === "CapCut") {
       // Private 1 Month
    if (item.section === "Private" && item.duration.includes("1 Month")) {
-    return `<div class="burmese-font">30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေးမယ်။
+    return `<div class="burmese-font">30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေမဲ့။
     30ရက်တစ်လအတိလဲပါနိုင်တယ်၊အများဆုံး 35 ရက်ထိပါနိုင်တာကိုပြောချင်တာပါ။  
     2 to 3 devices. Full warranty for the entire plan duration.
     </div>`;
@@ -2747,8 +3043,8 @@ Can't use on iOS devices.` + generalDetailsBlock,
    if (item.section === "Private Own Mail" && item.duration.includes("1 Month")) {
     return `<div class="burmese-font">OwnMail နဲ့လုပ်ဖို့ဆို CapCut တခါမမဖွင့်ဖူးတဲ့ Email လိုပါမယ်။ အဲ့တာနဲ့မရမာပါ။
     CapCut က အကောင့်ပြောင်းလဲ Project တေမပျက်တာမလို့ Private ကပိုရွေးချယ်သင့်ပါတယ်။  
-    30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေးမယ်။30ရက်တစ်လအတိလဲပါနိုင်တယ်
-    အများဆုံး 35 ရက်ထိပါနိုင်တာကိုပြောချင်တာပါ။  
+    30~35 ဆိုတာက ကျနော်က တစ်လလို့ရေးထားပေမဲ့။
+    30ရက်တစ်လအတိလဲပါနိုင်တယ်၊အများဆုံး 35 ရက်ထိပါနိုင်တာကိုပြောချင်တာပါ။  
     2 to 3 devices. Full warranty for the entire plan duration.
     </div>`;
    }
@@ -2763,6 +3059,22 @@ Can't use on iOS devices.` + generalDetailsBlock,
       
    }
    // ================= END CAPCUT NOTES ================= 
+   // ================= YOUTUBE PREMIUM CHECKOUT NOTES =================
+   if (productName === "YouTube Premium") {
+
+   if (item.section === "OwnMail Invite(Family Plan)" && item.duration.includes("1 Month")) {
+    return `<div class="burmese-font">
+    YouTube Account ပေးရမာပါ။
+    ဝင်ပီး Region Changeပေးမာပါ။Gmail&Passwordလိုပါတယ်။
+    လုပ်ပီးရင်ပြန်ထွက်မာပါ။
+    လတိုင်းသက်တန်းတိုးလို့ရပါတယ်။
+    Warranty ကတခုခုဖြစ်ခဲ့ရင်တခါပြန်လဲပေးပါတယ်။
+</div>`;
+  }
+
+}
+// ================= END YOUTUBE PREMIUM NOTES =================
+
       // Express VPN Windows plan note (Share → WindowsPC/Laptop)
    if (productName === "Express Vpn" && /windowspc/i.test(item.duration)) {
     return "Windows deviceတေမာပဲသုံးလို့ရပါမယ်။Full warrenty.";
@@ -2800,7 +3112,7 @@ Can't use on iOS devices.` + generalDetailsBlock,
         if (productName === "INSHOT") return `Mod appမဟုတ်ပါဘူး။Android onlyပဲသူံးလို့ရပါတယ်။ Playstore ကappမာပဲသုံးလို့ရပါမယ်။\nWarranty 3လပေးပါတယ်။\nShare plan မို့လို့ 1 device ပဲသုံးလို့ရပါမယ်။`;
     if (!fullText) return null;
     const rawDetails = fullText.trim();
-    const sectionHeaders = /^(Share|Private|SemiPrivate|FullPrivate|Tinder Plus Share|Login|Gift Plan & Link Plan|Gift Plan|Link Plan|Views \(NoDrop\)|Likes \(NoDrop\)|Comment - Emoji Type|Comment - Custom Type|Package Plan|Livestream Views|Livestream Likes|Livestream Share|Post Views|Positive Reactions|Negative Reactions|Custom Reactions|Premium Reactions|Members \(30Days Refill\)|Livestream Views|Comment - Impression Type|Comment - Custom Type|Video Views|Video Likes|Post Likes|Profile Followers|Page Followers|Live Stream Views|Video Views & Reels|Likes|Followers|Personal Plus \(Share\)|Personal Plus \(Private\)|Business - Invite Own Email|Business - Own|Private Own Mail|Private \(Own Mail\)|Base Service|1 Profile\(Semiprivate\)|5 Profiles\(Whole Account\)|Nitro Basic \(Key\)|Individual|Invite with email|Sharing Pro|Plan Basic|Plan Premium|HBO MAX \(ULTIMATE\) 1 Month|Private Whole Account \(1 Month\)|1 Profile|Whole Account|OwnMail Private|OwnMail Invite|Individual Plan|Business Own\(Full Warranty\)|Business Plus Own\(Full Warranty\)|Business Plus Own|Normal Plan|Family Head\(Can Invite 5 email\)|Invite Private|Web Private|App&Web Private|Pro Share|Pro Private|Lifetime Premium|Educational\(Invite\)|Individual Plan\(Private\)|Stars|Japan Region \(¥\)|US Region \(\$\)|UK Region \(£\)|Custom Amount|Turkey Region \(TL\)|Indonesia Region \(IDR\)|Brazil Region \(BRL\)|Korea Region \(₩\)|India Region \(₹\)|Australia Region \(A\$\)|Germany Region \(€\)|France Region \(€\)|Italy Region \(€\)|Switzerland Region \(CHF\)|Canada Region \(C\$\)|UAE Region \(AED\)|Poland Region \(PLN\)|Nitro \(Key\))/i;
+    const sectionHeaders = /^(Share|Private|SemiPrivate|FullPrivate|Tinder Plus Share|Login|Gift Plan & Link Plan|Gift Plan|Link Plan|Views \(NoDrop\)|Likes \(NoDrop\)|Comment - Emoji Type|Comment - Custom Type|Package Plan|Livestream Views|Livestream Likes|Livestream Share|Post Views|Positive Reactions|Negative Reactions|Custom Reactions|Premium Reactions|Members \(30Days Refill\)|Livestream Views|Comment - Impression Type|Comment - Custom Type|Video Views|Video Likes|Post Likes|Profile Followers|Page Followers|Live Stream Views|Video Views & Reels|Likes|Followers|Personal Plus \(Share\)|Personal Plus \(Private\)|Business Plus - Invite Own Email|Business - Own|Private Own Mail|Private \(Own Mail\)|Base Service|1 Profile\(Semiprivate\)|5 Profiles\(Whole Account\)|Nitro Basic \(Key\)|Individual|Invite with email|Sharing Pro|Plan Basic|Plan Premium|HBO MAX \(ULTIMATE\) 1 Month|Private Whole Account \(1 Month\)|1 Profile|Whole Account|OwnMail Private|OwnMail Invite|Individual Plan|Business Own\(Full Warranty\)|Business Plus Own\(Full Warranty\)|Business Plus Own|Normal Plan|Family Head\(Can Invite 5 email\)|Invite Private|Web Private|App&Web Private|Pro Share|Pro Private|Lifetime Premium|Educational\(Invite\)|Individual Plan\(Private\)|Stars|Japan Region \(¥\)|US Region \(\$\)|UK Region \(£\)|Custom Amount|Turkey Region \(TL\)|Indonesia Region \(IDR\)|Brazil Region \(BRL\)|Korea Region \(₩\)|India Region \(₹\)|Australia Region \(A\$\)|Germany Region \(€\)|France Region \(€\)|Italy Region \(€\)|Switzerland Region \(CHF\)|Canada Region \(C\$\)|UAE Region \(AED\)|Poland Region \(PLN\)|Nitro \(Key\))/i;
     const lines = rawDetails.split('\n').map(l => l.trim()).filter(l => l.length > 0);
     let targetSection = forceNoteSectionName.replace(/ \(.*\)/, '');
     if (productName === 'HBO Max') targetSection = item.section;
@@ -2866,14 +3178,16 @@ Can't use on iOS devices.` + generalDetailsBlock,
     }
     const netflixMultiItem = cart.find(item => item.product === 'Netflix' && item.section === '1 Profile' && item.qty > 1);
     if (netflixMultiItem) {
-      let burmeseText = `ဒါက${netflixMultiItem.qty}လစာဆိုပေမဲ့တစ်လတခါအကောင့်ပြောင်းနေရမာပဲမလို့တစ်လချင်းပဲယူရင်ယူပါ`.replace(/(\d+)/g, '<span class="warning-num">$1</span>');
+      let burmeseText = `ဒါက${netflixMultiItem.qty}Profile စာဝယ်တာပါ။${netflixMultiItem.qty}လစာသဘောမျိုးမဟုတ်ပါဘူး။စာသေချာဖတ်ပေးပါ။`.replace(/(\d+)/g, '<span class="warning-num">$1</span>');
       quantityWarning += `<div class="payment-warning-block"><div class="nt-line" style="color:#ffca28;font-weight:700;text-transform:uppercase;">ATTENTION: MULTIPLE MONTHS</div><div class="nt-line burmese-font">${burmeseText}</div></div>`;
     }
     const uniqueProductNotes = new Map();
     cart.forEach(item => {
       const productKey = item.product + item.section;
       let noteContent = getNoteForCartItem(item);
-      if (item.product === 'YouTube' && !noteContent.includes("Renew")) noteContent += "\nRenew လို့ရပါတယ်။သက်တန်းတိုးရင်တော့ 1Month ကို 6000ပါ။";
+      if (item.product === 'YouTube Premium' && noteContent && !noteContent.includes("Renew")) {
+      noteContent += "\nRenew လို့ရပါတယ်။သက်တန်းတိုးရင်တော့ 1Month ကို 6000ပါ။";
+      }
       if (noteContent) uniqueProductNotes.set(productKey, { item, noteContent });
     });
     const noteBlocks = Array.from(uniqueProductNotes.values()).map(({ item, noteContent }) => {
@@ -2914,7 +3228,16 @@ Can't use on iOS devices.` + generalDetailsBlock,
       dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => `<div class="receipt-line-item"><div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div><div class="details">${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}</div><div class="price">${formatKyats(item.sub)}</div></div>`).join('');
       dom.checkout.receipts.rm_total.textContent = formatKyats(total);
     }
-    const clipboardText = items.map(i => `- ${i.name} (${i.plan} • ${i.duration})${i.qty > 1 ? ` x${i.qty}` : ''}\n  Price: ${formatKyats(i.sub)}`).join('\n\n') + `\n-------------------\nTotal: ${formatKyats(total)}`;
+    const clipboardText =
+    items.map(i => {
+    const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
+    const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
+
+    return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
+      + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
+      + `\n  Price: ${formatKyats(i.sub)}`;
+  }).join('\n\n')
+  + `\n-------------------\nTotal: ${formatKyats(total)}`;
     dom.checkout.receiptText.value = clipboardText;
   }
 
