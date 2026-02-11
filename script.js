@@ -3776,6 +3776,37 @@ Can't use on iOS devices.` + generalDetailsBlock,
     window.scrollTo(0, 0);
     dom.cart.bar.style.display = 'none';
   }
+  // =======================
+// SAFE UNIT CALCULATOR
+// (prevents crash)
+// =======================
+function computeTotalUnits(duration, qty) {
+  if (!duration || !qty || qty <= 1) return "";
+
+  const t = String(duration);
+  const m = t.match(/([\d,]+)\s*([A-Za-z]+)/);
+  if (!m) return "";
+
+  const num = parseInt(m[1].replace(/,/g, ""), 10);
+  if (!Number.isFinite(num)) return "";
+
+  const unit = m[2];
+  return `${num * qty} ${unit}`;
+}
+
+// =======================
+// ONLY CAPCUT + EXPRESS
+// =======================
+function getDeviceLine(product, plan, duration, qty) {
+  if (qty <= 1) return "";
+  if (plan !== "Share") return "";
+
+  if (product !== "CapCut" && product !== "Express Vpn") return "";
+
+  if (!/month/i.test(duration)) return "";
+
+  return `${qty} Devices (Not ${qty} Months)`;
+}
 
   function buildReceipt() {
     const c = JSON.parse(localStorage.getItem('blp_cart') || '[]');
@@ -3812,14 +3843,13 @@ Can't use on iOS devices.` + generalDetailsBlock,
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
 
-    const devicesLine = getDevicesLineForOnlyCapcutAndExpress(i.name, i.plan, i.duration, i.qty);
-
+    const deviceLine = getDeviceLine(i.name, i.plan, i.duration, i.qty);
     const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
 
-    const extraLine = devicesLine || totalUnitsLine;
+    const extra = deviceLine || totalUnitsLine;
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
-      + (extraLine ? `\n  ${extraLine}` : '')
+      + (extra ? `\n  ${extra}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
   + `\n-------------------\nTotal: ${formatKyats(total)}`;
