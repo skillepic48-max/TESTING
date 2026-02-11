@@ -3793,24 +3793,38 @@ Can't use on iOS devices.` + generalDetailsBlock,
     } else {
       dom.checkout.receipts.single.style.display = 'none';
       dom.checkout.receipts.multi.style.display = 'block';
-      dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => `<div class="receipt-line-item"><div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div><div class="details">${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}</div><div class="price">${formatKyats(item.sub)}</div></div>`).join('');
+      dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => {
+  const expressDevicesLine =
+    (item.name === 'Express Vpn' && item.plan === 'Share' && item.qty > 1)
+      ? `${item.qty} Devices(Not ${item.qty}months)`
+      : '';
+
+  return `
+    <div class="receipt-line-item">
+      <div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div>
+      <div class="details">
+        ${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}
+        ${expressDevicesLine ? `<br>${escapeHTML(expressDevicesLine)}` : ''}
+      </div>
+      <div class="price">${formatKyats(item.sub)}</div>
+    </div>
+  `;
+}).join('');
+
       dom.checkout.receipts.rm_total.textContent = formatKyats(total);
     }
-    function getExpressVpnDeviceLine(i) {
-     // i.name = product, i.plan = section, i.qty = qty
-     if (i.name === "Express Vpn" && i.plan === "Share" && i.qty > 1) {
-     return `${i.qty} Devices(Not ${i.qty}months)`;
-   }
-     return null;
-   }
-
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
     const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
 
+    const expressDevicesLine =
+    (i.name === 'Express Vpn' && i.plan === 'Share' && i.qty > 1)
+      ? `${i.qty} Devices(Not ${i.qty}months)`
+      : '';
+
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
-      + (deviceLine ? `\n  ${deviceLine}` : '')
+      + (expressDevicesLine ? `\n  ${expressDevicesLine}` : '')
       + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
