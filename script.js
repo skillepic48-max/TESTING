@@ -160,6 +160,7 @@
     "Facebook Boosting": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-10387-D3.png",
     "Instagram Boosting": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-01-CA830.png",
     "Custom Website Service": "https://ik.imagekit.io/dkdlgynlu/Picsart-25-10-26-17-49-23-686.png",
+    "Domain": "https://ik.imagekit.io/dkdlgynlu/ICON%20_6176291_.png?updatedAt=1770475710430",
     "LightRoom": "https://ik.imagekit.io/dkdlgynlu/New-Project-52-75A8C0F.png",
     "Wattpad": "https://ik.imagekit.io/dkdlgynlu/Wattpad%20_DF63C42_.png",
     "Photoshop": "https://ik.imagekit.io/dkdlgynlu/Photoshop%20_83C7623_.png",
@@ -434,9 +435,6 @@
     },
     "Meitu": {
       "Private": [{
-        "duration": "1 Week",
-        "price": "3,000 Kyats"
-      }, {
         "duration": "20 Days",
         "price": "8,000 Kyats"
       }],
@@ -1164,6 +1162,12 @@
       "Normal Plan": [{
         "duration": "Custom Design & Fully Functional",
         "price": "150,000 Kyats"
+      }]
+    },
+    "Domain": {
+      "My.ID/my.id": [{
+        "duration": "1 Year",
+        "price": "30,000 Kyats"
       }]
     },
     "LightRoom": {
@@ -1958,6 +1962,31 @@ const adobeGroup = [
     const m = (t || "").replace(/,/g, "").replace(/Ks/g, "").replace(/≈/g, "").trim().match(/(\d+(\.\d+)?)/);
     return m ? Number(m[1]) : null;
   };
+// =========================
+// DOMAIN CHECK (.my.id)
+// =========================
+async function checkMyIdAvailability(name) {
+  const clean = String(name || "")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/^-+|-+$/g, "");
+
+  if (!clean) return { status: "invalid" };
+
+  const domain = clean + ".my.id";
+
+  try {
+    const res = await fetch("https://rdap.org/domain/" + domain);
+
+    if (res.status === 404) return { status: "available", domain };
+    if (res.ok) return { status: "taken", domain };
+
+    return { status: "unknown", domain };
+  } catch (e) {
+    return { status: "error", domain };
+  }
+}
 
   const formatKyats = n => (n || 0).toLocaleString("en-US") + " Kyats";
   // ===============================
@@ -1983,11 +2012,7 @@ const adobeGroup = [
     "View","Views",
     "Like","Likes",
     "Follower","Followers",
-    "Member","Members",
-    "Month","Months",
-    "Year","Years",
-    "Day","Days",
-    "Week","Weeks"
+    "Member","Members"
   ]);
 
   if (!allowedUnits.has(unit)) return null;
@@ -2012,6 +2037,316 @@ const adobeGroup = [
 
   return `Total • ${total.toLocaleString("en-US")} ${unit}`;
 }
+  /* =========================
+   PRODUCT HELPER POPUP SYSTEM (ALL PRODUCTS)
+   ========================= */
+
+let _helperTimer = null;
+
+function removeProductHelper() {
+  if (_helperTimer) {
+    clearTimeout(_helperTimer);
+    _helperTimer = null;
+  }
+  const old = document.getElementById("product-helper-wrap");
+  if (old) old.remove();
+}
+/* =========================
+   POPUP TEXT CONFIG (ALL PRODUCTS)
+   ========================= */
+
+const popupTextByProduct = {
+  "CapCut": {
+    title: "CapCut Info",
+    button: "Planတေကအများရီးပဲနားမလည်ဘူး။",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "တွေ့ရတဲ့တိုင်းCapCut မာရ္စေးချယ်စရာPlanသုံးခုရှိပါတယ်။ Share,Private,OwnMail",
+    "ဘာကွာလဲဆိုရင်....သိထားရမာကProချင်းတူတူပါပဲ။ အရင်ဆုံးSharePlanကဘယ်လိုလဲဆိုရင်။ သူကဝယ်ရင်တခြားလူ 2ယောက် 2 Devicesဝင်ပီးသားအကောင့်ကိုရမာပါ။ Riskတေရှိတယ်၊ကိုယ်က1 deviceပဲဝင်လို့ရမယ်။ ကိုယ်ကဖြစ်ဖြစ်တခြားနှစ်ယောက်ကဖြစ်ဖြစ် device limit ကျော်ဝင်ခဲ့ရင်အကောင့်ကပျက်သွားမာပါတစ်လမပြည့်ခင်။ Shareအကောင့်မလို့ကျနော့်ဘက်က Warranty 15ရက်ပဲပေးပါတယ်။ တခုခုဖြစ်လာခဲ့ရင်ဘယ်သူကပိုဝင်လဲမသိနိုင်လို့ Warranty မပေးတာပါနားလည်ပေးပါ။",
+    "သူကအကောင့်ကိုအပိုင်ရတာပါ။ ဖုန်းထဲထည့်ထားရတဲ့Gmailမဟုတ်ပါဘူး။ CapCut appထဲမာထည့်သုံးရတဲ့TempEmailပါ။ ကျနော်တို့ဘက်ကအကောင့်ပေးမာပါ။ ပေးတဲ့အကောင့်ကို CapCut appရဲ့ Email sign inမာဝင်သုံးရုံပါပဲ။",
+    "သူကဝယ်သူရဲ့ email ကိုလုပ်ပေးတာပါ။ ဒါပေမဲ့ CapCut မဖွင့်ရသေးတဲ့ email မပဲရပါမယ်။ ပြောရရင် Private ကပိုပီးရွေးချယ်သင့်တာပါ။ ဘာလို့ဆို CapCut ကအကောင့်ပြောင်းလဲ Project တေမပျက်ပါဘူး။",
+    "Share Planကဖုန်းတလုံးပဲသုံးလို့ရပါတယ်။ Private and OwnMail က Android, iOS, PC, Laptop All Device ရပါတယ်။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Privateကရော?",
+    "OwnMailကရော?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+"AlightMotion": {
+    title: "AlightMotion Info",
+    button: "Planတေကအများရီးပဲနားမလည်ဘူး။",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "တွေ့ရတဲ့တိုင်း AlightMotion မာရ္စေးချယ်စရာPlanသုံးခုရှိပါတယ်။ Share,Private,OwnMail",
+    "ဘာကွာလဲဆိုရင်....သိထားရမာကProချင်းတူတူပါပဲ။ အရင်ဆုံးSharePlanကဘယ်လိုလဲဆိုရင်။ သူကဝယ်ရင်တခြားလူ 7ယောက်နဲ့တူတူသုံးရမာပါ။ ဒါမဲ့စိတ်မပူပါနဲ့ Project တေကတော့မရောပါဘူး Private ပဲသုံးရမာပါ။ 6လအတွင်းတခုခုဖြစ်ခဲ့ရင်တခါပြန်လဲပေးပါတယ်။ Shareမို့လို့တခါပါပဲ။ Device changeလို့လဲမရပါ။ (ဆိုလိုတာကကိုယ်ကဖုန်းတခုနဲ့ဝင်ပီး‌၊နောက်ပိုင်းမဖုန်းလဲတာတေဘာတေမရဘူးပြောတာပါ။)",
+    "သူက အကောင့်ကိုအပိုင်ရတာပါ။ ဖုန်းထဲထည့်ထားရတဲ့Gmailမဟုတ်ပါဘူး။ Alight Motion appထဲမာထည့်သုံးရတဲ့TempEmailပါ။ ကျနော်တို့ဘက်ကအကောင့်ပေးမာပါ။ ပေးတဲ့အကောင့်ကို Alight Motion appရဲ့ Email sign inမာဝင်သုံးရုံပါပဲ။ Full Warranty က 1Yearအတွင်းတခုခုဖြစ်ရင်တခါပြန်လဲပေးပါတယ်။ Riskကင်းတဲ့ OwnMail ယူလဲရပါတယ်။",
+    "သူကဝယ်သူရဲ့ email ကိုလုပ်ပေးတာပါ။ Gmail/Email and password ပေးရပါတယ်။ အကောင့်ရဲ့ Password ပါ။ Alight Motionမာထားမဲ့ Password မဟုတ်ပါဘူး။ Google အကောင့်ကိုဝင်ပီးလုပ်ပေးမာပါ။ ပီးရင်ပြန်ထွက်မာပါ။ အကောင့်ရှိပီးသားဆိုလဲရပါတယ်။ သက်တန်းတိုးလို့လဲရပါတယ်။ ကိုယ့်Mailနဲ့ကိုယ်မလို့Errorလဲကင်းပါတယ်။ အဲ့တာကြောင့် OwnMail ကပိုပီးရွေးချယ်သင့်ပါတယ်။",
+    "Android ရော iOS ရောနှစ်ခုလုံးရပါတယ်။ Playstore & AppStore က official appတေမာပဲသုံးရမာပါ။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Privateကရော?",
+    "OwnMailကရော?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+  "Wink": {
+    title: "Wink Info",
+    button: "Planတေကအများရီးပဲနားမလည်ဘူး။",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "Winkမာကရ္စေးချယ်စရာPlan 3ခုပဲရှိတာပါ။ Share,Private,OwnMail",
+    "ဘာကွာလဲဆိုရင်....သိထားရမာက VIP ချင်းတူတူပါပဲ။ Shareဆိုတာကတော့သိတဲ့အတိုင်း 1Device ပဲဝင်လို့ရမယ်။ တခြားသူတေနဲ့တူတူသုံးရမယ်။ ဒါပေမဲ့ Private ပါ Project တေလုံးဝမရောပါဘူး။<br>(Stockကတော့ရှားတာမလို့အမြဲမရနိုင်ပါ။)",
+    "Privateကအကောင့်အပိုင်ရတာပါ။ ပီးတော့ ဘယ်ချိန်ဝယ်ဝယ် ဝယ်လို့ရပါတယ်။ 3 Devices ထိဝင်သုံးလို့ရပါတယ်။",
+    "OwnMail ဆိုတာကတော့ Private နဲ့အကုန်တူတူပါပဲ။ ဒါပေမဲ့ကျနော်ပေးတဲ့ Mail password မဟုတ်ပဲဝယ်သူရဲ့ account ကို VIP ဝယ်ပေးတာပါ။",
+    "Android ရော iOS ရောနှစ်ခုလုံးရပါတယ်။ Appကတော့ Android ဆိုရင်တော့ကျနော် China version official app ပေးမာပါ။<br>Playstore က App နဲ့က Vip သုံးလိူ့မရလို့ပါ။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Privateကရော?",
+    "OwnMailကရော?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+  "Meitu": {
+    title: "Meitu Info",
+    button: "ဒီနှစ်ခုကရောဘယ်လိုလဲ?",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "ဒါက Meitu ရဲ့ VIP Planပါ။ ရွေးစရာကနှစ်ခုပဲရှိပါတယ်။<br>Share & Private.",
+    "VIP ကတူတူပါပဲ။ ကွာတာက Share ဆိုရင် 1Device ပဲဝင်လို့ရမယ်။ တခြားသူတေနဲ့တူတူသုံးရမယ်။<br>(ဒါပေမဲ့ Demand နဲတာကြောင့် Private ပဲရဖို့များပါတယ်။)",
+    "Private ကတော့ 3 devices ဝင်သုံးလို့ရမယ်။ ဒီကပေးတဲ့အကောင့်ကို Meitu App မာထည့်သုံးရုံပါပဲ။ သူက Stock ရှားတာမို့လို့အရင်မေးပီးမဝယ်ပါ။ Full warranty.",
+    "Android ရော iOS ရောနှစ်ခုလုံးရပါတယ်။ Appကတော့ Android ဆိုရင်တော့ကျနော် China version official app ပေးမာပါ။<br>Playstore က App နဲ့က Vip သုံးလိူ့မရလို့ပါ။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Private ဆိုတာက?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+  "PicsArt": {
+    title: "PicsArt Info",
+    button: "Plan 2 ခုကိုရှင်းပြပေးပါ။",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "PicsArt မာကရ္စေးချယ်စရာ Plan 2 ခုပဲရှိတာပါ။<br>Share & Private",
+    "ဘာကွာလဲဆိုရင် Pro ချင်းတူတူပါပဲ။ Shareဆိုတာကတော့သိတဲ့အတိုင်း 1Device ပဲဝင်လို့ရမယ်။ တခြားသူတေနဲ့တူတူသုံးရမယ်။ Edit History တေလဲရောပါတယ်။ သူ Edit တာလဲကိုယ်မြင်နေရမာဖြစ်သလို၊ကိုယ် Edit တာကိုလဲတခြားသူတေမြင်ရမာပါ။",
+    "Private ကတော့ Total 5 Devices ထိဝင်သုံးလို့ရမယ်။ Private History. ပီးတော့ Full warranty. ကျနော်ပေးတဲ့အကောင့်ကို PicsArt App မာဝင်သုံးရုံပါပဲ။",
+    "Android ရော iOS ရောနှစ်ခုလုံးရပါတယ်။ Playstore & AppStore က official appတေမာပဲသုံးရမာပါ။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Private ဆိုတာက?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+  "Canva": {
+    title: "Canva Info",
+    button: "Planတေကအများရီးပဲနားမလည်ဘူး။",
+    nextText: "ဘာတေကွာလဲ?",
+    backText: "Back",
+    steps: [
+    "တွေ့ရတဲ့တိုင်း Canva မာရ္စေးချယ်စရာPlan 3 ခုရှိပါတယ်။<br>Share,Private,Educational",
+    "ဘာကွာလဲဆိုရင်တော်တော်ကွာပါတယ်။ ဒီထဲက Share Invite ဆိုတာကဝယ်သူရဲ့ Email ကို invite လုပ်ပေးလိုက်မာပါ။ Pro features တေရတယ်ဆိုပေမဲ့ Members အနေနဲ့မို့လို့ Limited access သဘောပါပဲ(ဥပမာFontတေကိုထည့်ချင်တာထည့်မရတာမျိုးလိုပေါ့။) Total 20~30Daysကြားပဲရမာပါ။ ဒါကဘာကိုပြောတာလဲဆိုရင်ဥပမာကိုယ်က1ရက်နေ့ကဝယ်လိုက်တယ်ဆိုရင် 20 ရက့်နေ့မလဲကုန်နိုင်တယ်အဲ့ကနေ 30 ထိလဲအများဆုံးရနိုင်တယ်။ အနဲဆုံးကတော့ 20 ရက်ပေါ့။",
+    "Private ကတော့သူက Pro features ကိုမ full access ရနေမယ်။ ကျနော်ပေးတဲ့အကောင့်ကို Canva app မာဝင်သုံးရုံပါပဲ။ Email အခု 100 ကို Pro ပြန်ပေးလို့ရတယ်။ ဒါကဘာကိုဆိုလဲလဲဆိုရင် Share 1500 တန်အခု 100 ပေါ့။ ကိုယ့်ရဲ့ Email ကိုလဲ Admin အနေနဲ့ပြန် Invite လို့ရတယ်။",
+    "Educationalဆိုတာကကျောင်းသားတေအတွက်ပါ။ Lifetime ဆိုတော့ Features တေကလဲကျောင်းမာလိုသလောက်ပဲပါတာပါ။ ပြောရရင် Limited Features ပေါ့။ သူကဝယ်သူရဲ့ Email ကို Invite ပေးတာပါ။ Warranty 5 လပေးထားပါတယ်။",
+    "Android ရော iOS ရော PC,laptop အကုန်ရပါတယ်။ Playstore & AppStore က official appတေမာပဲသုံးရမာပါ။"
+  ],
+    stepButtons: [
+    "ဘာတေကွာလဲ?",
+    "Privateကရော?",
+    "Educational<br>ကရော?",
+    "All Devices<br>ရလား?"
+  ]
+  },
+  "Netflix": {
+    title: "Netflix Info",
+    body: "hi"
+  },
+
+  "TikTok Official": {
+    title: "TikTok Boost",
+    body: "hi"
+  }
+};
+
+function initProductHelper(productName) {
+  removeProductHelper();
+
+  const conf = popupTextByProduct[productName] || null;
+
+  // ✅ steps support (if not provided, fallback to single body)
+  const steps = Array.isArray(conf?.steps) && conf.steps.length
+    ? conf.steps
+    : [conf?.body || "Tap the button to continue..."];
+  const nextLabel = conf?.nextText || "Next";
+  const backLabel = conf?.backText || "Back";
+  const doneLabel = conf?.doneText || conf?.doneLabel || "နားလည်ပါပီ။";
+
+  let stepIndex = 0;
+
+  const wrap = document.createElement("div");
+  wrap.className = "helper-wrap";
+  wrap.id = "product-helper-wrap";
+
+  wrap.innerHTML = `
+    <div class="helper-panel" id="product-helper-panel">
+      <p class="t" id="helper-title">${escapeHTML(conf?.title || (productName + " Helper"))}</p>
+      <p class="p" id="helper-body">${escapeHTML(steps[0])}</p>
+
+      <!-- buttons container (hidden at first) -->
+    <div class="helper-nav" id="helper-nav" style="display:none; margin-top:10px; gap:8px;">
+      <button type="button" class="helper-nav-btn" id="helper-back" disabled>
+      ${escapeHTML(conf?.backText || "Back")}
+      </button>
+
+      <button type="button" class="helper-nav-btn" id="helper-next">
+      ${escapeHTML(conf?.nextText || "Next")}
+      </button>
+     </div>
+    </div>
+
+ <div class="helper-main-stack" id="helper-main-stack">
+
+    <button class="helper-btn anim-neon-bounce" id="product-helper-btn" type="button">
+    <span class="dot"></span>
+    <span class="label">${escapeHTML(conf?.button || "Still Developing")}</span>
+    </button>
+
+    <button class="helper-btn helper-btn-cancel anim-neon-bounce"
+          id="product-helper-cancel"
+          type="button">
+    <span class="dot"></span>
+    <span class="label">အကုန်နားလည်ပီးသားပါ။</span>
+  </button>
+
+</div>
+  `;
+
+  dom.views.product.appendChild(wrap);
+
+  const btn = document.getElementById("product-helper-btn");
+  const panel = document.getElementById("product-helper-panel");
+  const titleEl = document.getElementById("helper-title");
+  const bodyEl  = document.getElementById("helper-body");
+
+  const nav = document.getElementById("helper-nav");
+  const backBtn = document.getElementById("helper-back");
+  const nextBtn = document.getElementById("helper-next");
+
+  let navTimer = null;
+
+  function updateNavUI() {
+   // if only 1 step → no nav at all
+    if (steps.length <= 1) {
+    nav.style.display = "none";
+    return;
+   }
+
+    backBtn.disabled = stepIndex === 0;
+
+    // back button label
+    backBtn.textContent = backLabel;
+
+    // per-step next button labels
+    const stepBtnTexts = Array.isArray(conf?.stepButtons) ? conf.stepButtons : [];
+
+    // last step button label
+    if (stepIndex === steps.length - 1) {
+    nextBtn.textContent = doneLabel;
+    } else {
+    nextBtn.innerHTML = stepBtnTexts[stepIndex] || escapeHTML(nextLabel);
+  }
+  }
+
+  function renderStep() {
+    titleEl.textContent = conf?.title || (productName + " Helper");
+    bodyEl.innerHTML = steps[stepIndex];
+    updateNavUI();
+  }
+
+  // Appear after 3 seconds
+  const cancelBtn = document.getElementById("product-helper-cancel");
+
+  _helperTimer = setTimeout(() => {
+    wrap.classList.add("is-active");
+    btn.classList.add("is-visible");
+    cancelBtn?.classList.add("is-visible");
+  }, 2000);
+  // Cancel: remove both buttons + panel
+cancelBtn?.addEventListener("click", () => {
+  wrap.classList.remove("is-active");
+  btn.classList.remove("is-visible");
+  cancelBtn.classList.remove("is-visible");
+  panel.classList.remove("show");
+  nav.classList.remove("show");
+  nav.style.display = "none";
+
+  setTimeout(() => removeProductHelper(), 250);
+});
+
+
+  // Click: show/hide panel
+  btn.addEventListener("click", () => {
+    if (cancelBtn) cancelBtn.classList.remove("is-visible");
+    panel.classList.toggle("show");
+
+    // when panel opens → show nav after 1 second (only if multiple steps)
+    if (panel.classList.contains("show")) {
+      renderStep();
+
+      if (navTimer) clearTimeout(navTimer);
+      nav.classList.remove("show");
+      nav.style.display = "none";
+
+      if (steps.length > 1) {
+        navTimer = setTimeout(() => {
+          nav.style.display = "flex";
+          updateNavUI();
+          // allow browser to apply display:flex first, then animate
+          setTimeout(() => {
+           nav.classList.add("show");
+          }, 20);
+        }, 1000);
+      }
+    } else {
+      // panel closed → reset nav timer
+      if (navTimer) clearTimeout(navTimer);
+      nav.classList.remove("show");
+      nav.style.display = "none";
+    }
+  });
+
+  backBtn.addEventListener("click", () => {
+    if (stepIndex > 0) {
+      stepIndex--;
+      renderStep();
+    }
+  });
+
+  nextBtn.addEventListener("click", () => {
+    if (stepIndex < steps.length - 1) {
+      stepIndex++;
+      renderStep();
+     } else {
+     wrap.classList.remove("is-active");
+     btn.classList.remove("is-visible");
+     panel.classList.remove("show");
+     nav.classList.remove("show");
+     nav.style.display = "none";
+
+     setTimeout(() => removeProductHelper(), 250);
+    }
+  });
+}
+
 
   const cartKey = ({
     product,
@@ -2372,6 +2707,135 @@ const adobeGroup = [
       </section>`;
 
     dom.views.product.innerHTML = pageHTML;
+    initProductHelper(productName);
+
+    // =========================
+    // =========================
+// DOMAIN CHECK UI (under 1 Year 30k) + ADD TO CART WHEN AVAILABLE
+// =========================
+if (productName === "Domain") {
+  const DOMAIN_PRICE_TEXT = "30,000 Kyats";
+  const DOMAIN_PRICE = parseKyats(DOMAIN_PRICE_TEXT) || 30000;
+
+  const checkerHTML = `
+    <div class="plan-box" id="domain-checker-box">
+      <div class="plan-title">Check Domain Availability</div>
+
+      <div style="padding:10px; display:flex; flex-direction:column; gap:10px;">
+        <label style="font-size:14px; color:#ccc;">Enter Domain Name</label>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <input
+            id="domain-check-input"
+            placeholder="example: bluelamp"
+            style="flex:1;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:white;font-size:16px;"
+          />
+          <div style="font-weight:800; opacity:.8;">.my.id</div>
+        </div>
+
+        <button id="domain-check-btn" class="btn btn-primary" style="width:100%;">
+          Check
+        </button>
+
+        <div id="domain-check-result" style="font-size:14px;"></div>
+
+        <!-- Hidden by default, only appears when available -->
+        <button
+          id="domain-add-btn"
+          class="btn btn-primary"
+          style="width:100%; display:none;"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Put it right after the first plan-box (My.ID/my.id)
+  const planBoxes = dom.views.product.querySelectorAll(".plan-box");
+  if (planBoxes.length > 0) {
+    planBoxes[0].insertAdjacentHTML("afterend", checkerHTML);
+  } else {
+    const popularSection = dom.views.product.querySelector(".popular-section");
+    if (popularSection) popularSection.insertAdjacentHTML("beforebegin", checkerHTML);
+  }
+
+  const input = document.getElementById("domain-check-input");
+  const btn = document.getElementById("domain-check-btn");
+  const addBtn = document.getElementById("domain-add-btn");
+  const result = document.getElementById("domain-check-result");
+
+  let lastAvailableDomain = null; // store "name.my.id" when available
+
+  const renderResult = (type, text) => {
+    const map = {
+      ok: "#00e676",
+      bad: "#ff5252",
+      warn: "#ffd54f",
+      info: "#b0bec5"
+    };
+    result.innerHTML = `<span style="color:${map[type] || map.info};font-weight:800;">${text}</span>`;
+  };
+
+  const hideAdd = () => {
+    addBtn.style.display = "none";
+    lastAvailableDomain = null;
+  };
+
+  btn.addEventListener("click", async () => {
+    hideAdd();
+    btn.textContent = "Checking...";
+    btn.disabled = true;
+    result.textContent = "";
+
+    const raw = input.value;
+    const r = await checkMyIdAvailability(raw);
+
+    if (r.status === "invalid") {
+      renderResult("warn", "Type a name first");
+    } else if (r.status === "available") {
+      lastAvailableDomain = r.domain; // e.g. "hello.my.id"
+      renderResult("ok", `${r.domain} is Available ✓`);
+      addBtn.style.display = "block";
+    } else if (r.status === "taken") {
+      renderResult("bad", `${r.domain} is Taken ✕`);
+    } else {
+      renderResult("warn", "Can't check right now (blocked/offline)");
+    }
+
+    btn.textContent = "Check";
+    btn.disabled = false;
+  });
+
+  // Optional: press Enter to check
+  input.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter") btn.click();
+  });
+
+  // If user changes input after availability, hide the add button again
+  input.addEventListener("input", () => {
+    hideAdd();
+    result.textContent = "";
+  });
+
+  // Add to cart when available
+  addBtn.addEventListener("click", () => {
+    if (!lastAvailableDomain) return;
+
+    const item = {
+      product: "Domain",
+      section: "My.ID/my.id",
+      duration: `${lastAvailableDomain} (1 Year)`,
+      unitPrice: DOMAIN_PRICE,
+      priceText: DOMAIN_PRICE_TEXT
+    };
+
+    addToCart(item);
+
+    addBtn.textContent = "Added!";
+    setTimeout(() => (addBtn.textContent = "Add to Cart"), 900);
+  });
+}
 
     // --- CUSTOM CALCULATOR LOGIC ---
     const customConf = customConfigs[productName];
@@ -2602,9 +3066,105 @@ if (productName === "TikTok Official") {
     });
   }
 }
+    // --- TELEGRAM STAR: CUSTOM STARS (like TikTok custom coins) ---
+if (productName === "Telegram Star") {
+  // Base: use your existing "50 Stars" price as reference
+  const basePriceText = productData["Telegram Star"]?.["Stars"]?.[0]?.price;      // e.g. "3,800 Kyats"
+  const baseStarsText = productData["Telegram Star"]?.["Stars"]?.[0]?.duration;   // e.g. "50 Stars"
 
+  const basePrice = parseKyats(basePriceText) || 3800; // fallback
+  const baseStarsMatch = String(baseStarsText || "").match(/(\d+)/);
+  const baseStars = baseStarsMatch ? parseInt(baseStarsMatch[1], 10) : 50; // fallback
 
+  // Kyats per star (3800/50 = 76)
+  const kyatsPerStar = Math.max(1, Math.round(basePrice / baseStars));
 
+  // Limits (you can adjust)
+  const MIN_STARS = 50;
+  const MAX_STARS = 100000;
+
+  const tgStarsHTML = `
+    <div class="plan-box">
+      <div class="plan-title">Custom Stars (Telegram)</div>
+      <div style="padding:10px; display:flex; flex-direction:column; gap:10px;">
+        <label style="font-size:14px; color:#ccc;">Enter Stars (${MIN_STARS} - ${MAX_STARS})</label>
+
+        <div style="display:flex; gap:10px;">
+          <input
+            type="number"
+            id="tg-stars-input"
+            min="${MIN_STARS}"
+            max="${MAX_STARS}"
+            placeholder="${MIN_STARS}-${MAX_STARS}"
+            style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:white; font-size:16px;"
+          />
+          <div id="tg-stars-calc-price" style="align-self:center; font-weight:bold; color:#00e676; min-width:120px; text-align:right;">
+            0 Kyats
+          </div>
+        </div>
+
+        <div style="font-size:12px; opacity:.75; line-height:1.4;">
+          Rate: ~${kyatsPerStar} Kyats / Star (based on ${baseStars} Stars = ${basePrice.toLocaleString("en-US")} Kyats)
+        </div>
+
+        <button id="btn-add-tg-stars" class="btn btn-primary" style="width:100%;">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
+
+  const popularSection = dom.views.product.querySelector(".popular-section");
+  if (popularSection) {
+    popularSection.insertAdjacentHTML("beforebegin", tgStarsHTML);
+
+    const input = document.getElementById("tg-stars-input");
+    const priceDisplay = document.getElementById("tg-stars-calc-price");
+    const addBtn = document.getElementById("btn-add-tg-stars");
+
+    input.addEventListener("input", () => {
+      const stars = parseInt(input.value, 10);
+
+      if (!stars || stars < MIN_STARS || stars > MAX_STARS) {
+        addBtn.style.backgroundColor = "#ff4444";
+        addBtn.textContent = `⚠️ Limit: ${MIN_STARS} - ${MAX_STARS}`;
+        priceDisplay.textContent = "0 Kyats";
+        return;
+      }
+
+      addBtn.style.removeProperty("background-color");
+      addBtn.textContent = "Add to Cart";
+
+      const totalPrice = stars * kyatsPerStar;
+      priceDisplay.textContent = formatKyats(totalPrice);
+    });
+
+    addBtn.addEventListener("click", () => {
+      const stars = parseInt(input.value, 10);
+      if (!stars || stars < MIN_STARS || stars > MAX_STARS) return;
+
+      const totalPrice = stars * kyatsPerStar;
+
+      const item = {
+        product: "Telegram Star",
+        section: "Stars",
+        duration: `${stars} Stars`,
+        unitPrice: totalPrice,
+        priceText: formatKyats(totalPrice)
+      };
+
+      addToCart(item);
+
+      // ✅ RESET after add
+      input.value = "";
+      priceDisplay.textContent = "0 Kyats";
+      addBtn.style.removeProperty("background-color");
+
+      addBtn.textContent = "Added!";
+      setTimeout(() => (addBtn.textContent = "Add to Cart"), 1000);
+    });
+  }
+}
     renderPopular("popular-product", productName);
     showView('product');
     window.scrollTo(0, 0);
@@ -2880,6 +3440,10 @@ Supports all devices.` + generalDetailsBlock,
     "PlaySafeCard": `Voucher Code
 Expires in 7 Days.
 Please contact admin for usage details.` + generalDetailsBlock,
+    "Domain": `My.ID/my.id
+    1 Year — 30,000 Kyats
+    ဒါကကိုယ့်မာ Website ရှိပီး Domain မရှိရင်သုံးဖို့အတွက်ပါ။ နှစ်တိုင်းသက်တန်းတိုးသွားလို့ရပါတယ်။` + generalDetailsBlock,
+
     "TikTok Official": `Login method
      Coinက TikTok official boostတဲ့နေရာမာ Coin တေကိုသုံးရတာပါ။ Login ဝင်ပီးဝယ်ရတာပါ။ buttt email password ဘာမပေးစရာမလိုပါဘူး။
 
@@ -3000,6 +3564,10 @@ Can't use on iOS devices.` + generalDetailsBlock,
 
   function getNoteForCartItem(item) {
     const productName = item.product.replace(/ \(.+\)$/, '');
+    if (productName === "Domain") {
+    return "ဒါကကိုယ့်မာ Website ရှိပီး Domain မရှိရင်သုံးဖို့အတွက်ပါ။ နှစ်တိုင်းသက်တန်းတိုးသွားလို့ရပါတယ်။";
+    }
+
     // --- TikTok Official: NoLoginBoost checkout note ---
     if (productName === "TikTok Official" && item.section === "NoLoginBoost") {
     return `<div class="burmese-font">ဒါကအကောင့်ဝင်မရတာတေ။မဝင်စေချင်တာတေအတွက်Video Linkပေးရုံနဲ့ Boost ပေးတာပါ။</div>`;
@@ -3228,12 +3796,21 @@ Can't use on iOS devices.` + generalDetailsBlock,
       dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => `<div class="receipt-line-item"><div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div><div class="details">${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}</div><div class="price">${formatKyats(item.sub)}</div></div>`).join('');
       dom.checkout.receipts.rm_total.textContent = formatKyats(total);
     }
+    function getExpressVpnDeviceLine(i) {
+     // i.name = product, i.plan = section, i.qty = qty
+     if (i.name === "Express Vpn" && i.plan === "Share" && i.qty > 1) {
+     return `${i.qty} Devices(Not ${i.qty}months)`;
+   }
+     return null;
+   }
+
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
     const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
+      + (deviceLine ? `\n  ${deviceLine}` : '')
       + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
