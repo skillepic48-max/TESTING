@@ -3776,37 +3776,6 @@ Can't use on iOS devices.` + generalDetailsBlock,
     window.scrollTo(0, 0);
     dom.cart.bar.style.display = 'none';
   }
-  // =======================
-// SAFE UNIT CALCULATOR
-// (prevents crash)
-// =======================
-function computeTotalUnits(duration, qty) {
-  if (!duration || !qty || qty <= 1) return "";
-
-  const t = String(duration);
-  const m = t.match(/([\d,]+)\s*([A-Za-z]+)/);
-  if (!m) return "";
-
-  const num = parseInt(m[1].replace(/,/g, ""), 10);
-  if (!Number.isFinite(num)) return "";
-
-  const unit = m[2];
-  return `${num * qty} ${unit}`;
-}
-
-// =======================
-// ONLY CAPCUT + EXPRESS
-// =======================
-function getDeviceLine(product, plan, duration, qty) {
-  if (qty <= 1) return "";
-  if (plan !== "Share") return "";
-
-  if (product !== "CapCut" && product !== "Express Vpn") return "";
-
-  if (!/month/i.test(duration)) return "";
-
-  return `${qty} Devices (Not ${qty} Months)`;
-}
 
   function buildReceipt() {
     const c = JSON.parse(localStorage.getItem('blp_cart') || '[]');
@@ -3824,35 +3793,20 @@ function getDeviceLine(product, plan, duration, qty) {
     } else {
       dom.checkout.receipts.single.style.display = 'none';
       dom.checkout.receipts.multi.style.display = 'block';
-      dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => {
-  const devicesLine = getDevicesLineForOnlyCapcutAndExpress(item.name, item.plan, item.duration, item.qty);
-
-  return `<div class="receipt-line-item">
-    <div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div>
-    <div class="details">
-      ${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}
-      ${devicesLine ? `<br>${escapeHTML(devicesLine)}` : ''}
-    </div>
-    <div class="price">${formatKyats(item.sub)}</div>
-  </div>`;
-}).join('');
-
+      dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => `<div class="receipt-line-item"><div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div><div class="details">${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}</div><div class="price">${formatKyats(item.sub)}</div></div>`).join('');
       dom.checkout.receipts.rm_total.textContent = formatKyats(total);
     }
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
-
-    const deviceLine = getDeviceLine(i.name, i.plan, i.duration, i.qty);
     const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
 
-    const extra = deviceLine || totalUnitsLine;
-
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
-      + (extra ? `\n  ${extra}` : '')
+      + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
   + `\n-------------------\nTotal: ${formatKyats(total)}`;
+    dom.checkout.receiptText.value = clipboardText;
   }
 
   function formatDetails(raw) {
