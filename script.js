@@ -3816,20 +3816,20 @@ Can't use on iOS devices.` + generalDetailsBlock,
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
-    const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
+      
+    let extraLine = null;
 
-    const expressDevicesLine =
-    (i.name === 'Express Vpn' && i.plan === 'Share' && i.qty > 1)
-      ? `${i.qty} Devices(Not ${i.qty}months)`
-      : '';
+    if (i.name === "CapCut" && i.plan === "Share" && i.qty > 1) {
+    extraLine = `${i.qty} Devices (Not ${i.qty} Months)`;
+  } else {
+    extraLine = computeTotalUnits(i.duration, i.qty);
+  }
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
-      + (expressDevicesLine ? `\n  ${expressDevicesLine}` : '')
-      + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
+      + (extraLine ? `\n  ${extraLine}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
   + `\n-------------------\nTotal: ${formatKyats(total)}`;
-    dom.checkout.receiptText.value = clipboardText;
   }
 
   function formatDetails(raw) {
