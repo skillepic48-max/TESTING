@@ -3793,12 +3793,12 @@ function computeTotalUnits(duration, qty) {
   const unit = m[2];
   return `${num * qty} ${unit}`;
 }
-
+  
 function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
   if (qty <= 1) return "";
   if (plan !== "Share") return "";
 
-  // Express VPN: apply to ALL Share plans (Phone / PC / Mac / Linux etc.)
+  // Express VPN: apply to ALL Share plans (Phone / Windows / Mac / Linux etc.)
   if (product === "Express Vpn") {
     return `${qty} Devices (Not ${qty} Months)`;
   }
@@ -3810,6 +3810,7 @@ function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
 
   return "";
 }
+
   function buildReceipt() {
     const c = JSON.parse(localStorage.getItem('blp_cart') || '[]');
     if (!c.length) { dom.checkout.receiptStep.innerHTML = '<p>Your cart is empty.</p>'; return; }
@@ -3820,7 +3821,7 @@ function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
     qty: i.qty,
     unitPrice: i.unitPrice,
     sub: i.unitPrice * i.qty
-  }));
+}));
     const total = items.reduce((s, x) => s + x.sub, 0);
     if (items.length === 1) {
       const x = items[0];
@@ -3851,19 +3852,6 @@ function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
-
-    // ✅ Custom “Not X Months” lines (receipt only)
-    let extraLine = null;
-
-    // Express VPN: apply to ALL Share plans (Phone / Windows / MacBook / Linux) when qty > 1
-    if (i.name === 'Express Vpn' && i.plan === 'Share' && i.qty > 1) {
-    extraLine = `${i.qty} Devices (Not ${i.qty} Months)`;
-  }
-
-    // CapCut: ONLY Share 6000Ks plan when qty > 1
-    if (i.name === 'CapCut' && i.plan === 'Share' && i.unitPrice === 6000 && i.qty > 1) {
-    extraLine = `${i.qty} Account (Not ${i.qty} Months)`;
-  }
     const extraLine = getReceiptExtraLine(i.name, i.plan, i.duration, i.qty, i.unitPrice);
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
@@ -3871,6 +3859,8 @@ function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
   + `\n-------------------\nTotal: ${formatKyats(total)}`;
+  dom.checkout.receiptText.value = clipboardText;
+
   }
 
   function formatDetails(raw) {
