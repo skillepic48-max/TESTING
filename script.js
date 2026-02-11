@@ -3794,21 +3794,16 @@ Can't use on iOS devices.` + generalDetailsBlock,
       dom.checkout.receipts.single.style.display = 'none';
       dom.checkout.receipts.multi.style.display = 'block';
       dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => {
-  const expressDevicesLine =
-    (item.name === 'Express Vpn' && item.plan === 'Share' && item.qty > 1)
-      ? `${item.qty} Devices(Not ${item.qty}months)`
-      : '';
+  const devicesLine = getDevicesLineForOnlyCapcutAndExpress(item.name, item.plan, item.duration, item.qty);
 
-  return `
-    <div class="receipt-line-item">
-      <div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div>
-      <div class="details">
-        ${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}
-        ${expressDevicesLine ? `<br>${escapeHTML(expressDevicesLine)}` : ''}
-      </div>
-      <div class="price">${formatKyats(item.sub)}</div>
+  return `<div class="receipt-line-item">
+    <div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div>
+    <div class="details">
+      ${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}
+      ${devicesLine ? `<br>${escapeHTML(devicesLine)}` : ''}
     </div>
-  `;
+    <div class="price">${formatKyats(item.sub)}</div>
+  </div>`;
 }).join('');
 
       dom.checkout.receipts.rm_total.textContent = formatKyats(total);
@@ -3816,14 +3811,12 @@ Can't use on iOS devices.` + generalDetailsBlock,
     const clipboardText =
     items.map(i => {
     const qtyPart = i.qty > 1 ? ` x${i.qty}` : '';
-      
-    let extraLine = null;
 
-    if (i.name === "CapCut" && i.plan === "Share" && i.qty > 1) {
-    extraLine = `${i.qty} Devices (Not ${i.qty} Months)`;
-  } else {
-    extraLine = computeTotalUnits(i.duration, i.qty);
-  }
+    const devicesLine = getDevicesLineForOnlyCapcutAndExpress(i.name, i.plan, i.duration, i.qty);
+
+    const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
+
+    const extraLine = devicesLine || totalUnitsLine;
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
       + (extraLine ? `\n  ${extraLine}` : '')
