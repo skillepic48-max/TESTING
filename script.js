@@ -3794,20 +3794,22 @@ function computeTotalUnits(duration, qty) {
   return `${num * qty} ${unit}`;
 }
 
-// =======================
-// ONLY CAPCUT + EXPRESS
-// =======================
-function getDeviceLine(product, plan, duration, qty) {
+function getReceiptExtraLine(product, plan, duration, qty, unitPrice) {
   if (qty <= 1) return "";
   if (plan !== "Share") return "";
 
-  if (product !== "CapCut" && product !== "Express Vpn") return "";
+  // Express VPN: apply to ALL Share plans (Phone / PC / Mac / Linux etc.)
+  if (product === "Express Vpn") {
+    return `${qty} Devices (Not ${qty} Months)`;
+  }
 
-  if (!/month/i.test(duration)) return "";
+  // CapCut: ONLY Share 6,000Ks plan
+  if (product === "CapCut" && unitPrice === 6000) {
+    return `${qty} Account (Not ${qty} Months)`;
+  }
 
-  return `${qty} Devices (Not ${qty} Months)`;
+  return "";
 }
-
   function buildReceipt() {
     const c = JSON.parse(localStorage.getItem('blp_cart') || '[]');
     if (!c.length) { dom.checkout.receiptStep.innerHTML = '<p>Your cart is empty.</p>'; return; }
@@ -3832,13 +3834,13 @@ function getDeviceLine(product, plan, duration, qty) {
       dom.checkout.receipts.single.style.display = 'none';
       dom.checkout.receipts.multi.style.display = 'block';
       dom.checkout.receipts.rm_itemList.innerHTML = items.map(item => {
-  const devicesLine = getDevicesLineForOnlyCapcutAndExpress(item.name, item.plan, item.duration, item.qty);
+  const extraLine = getReceiptExtraLine(item.name, item.plan, item.duration, item.qty, item.unitPrice);
 
   return `<div class="receipt-line-item">
     <div class="title">${escapeHTML(item.name)}${item.qty > 1 ? ` (x${item.qty})` : ''}</div>
     <div class="details">
       ${escapeHTML(item.plan)} • ${escapeHTML(item.duration)}
-      ${devicesLine ? `<br>${escapeHTML(devicesLine)}` : ''}
+      ${extraLine ? `<br>${escapeHTML(extraLine)}` : ''}
     </div>
     <div class="price">${formatKyats(item.sub)}</div>
   </div>`;
@@ -3862,12 +3864,10 @@ function getDeviceLine(product, plan, duration, qty) {
     if (i.name === 'CapCut' && i.plan === 'Share' && i.unitPrice === 6000 && i.qty > 1) {
     extraLine = `${i.qty} Account (Not ${i.qty} Months)`;
   }
-
-    const totalUnitsLine = computeTotalUnits(i.duration, i.qty);
+    const extraLine = getReceiptExtraLine(i.name, i.plan, i.duration, i.qty, i.unitPrice);
 
     return `- ${i.name} (${i.plan} • ${i.duration})${qtyPart}`
       + (extraLine ? `\n  ${extraLine}` : '')
-      + (totalUnitsLine ? `\n  ${totalUnitsLine}` : '')
       + `\n  Price: ${formatKyats(i.sub)}`;
   }).join('\n\n')
   + `\n-------------------\nTotal: ${formatKyats(total)}`;
